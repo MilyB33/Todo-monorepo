@@ -1,0 +1,39 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .text-input {
+    @apply !bg-surface-300  !text-text-secondary !border-surface-300 !shadow-lg !w-full;
+    border-radius: 5px;
+  }
+
+  .text-input:hover {
+    @apply !text-text-secondary !border-surface-300 !shadow-lg;
+  }
+
+  .text-input:focus {
+    @apply !text-text-dark !border-blue-500 !shadow-lg;
+    background-color: transparent !important;
+  }
+
+  .text-input--error {
+    @apply !text-defaults-error !border-defaults-error !shadow-lg;
+  }
+
+  .checkbox .p-checkbox-box {
+    background-color: transparent;
+  }
+
+  .add-button {
+    background-color: transparent;
+    border: 2px dashed #000;
+    @apply text-text-secondary !border-text-secondary mx-auto;
+  }
+
+  .add-button:hover {
+    background-color: transparent !important;
+
+    @apply !text-text !border-text;
+  }
+}
