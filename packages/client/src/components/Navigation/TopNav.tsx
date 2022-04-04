@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { ViewGridIcon, CollectionIcon } from "@heroicons/react/solid";
 import Typography from "../Typography";
+import UserOverlay from "./UserOverlay";
 
 const Navigation = () => {
   return (
@@ -13,6 +14,8 @@ const Navigation = () => {
         <CollectionIcon className="h-5 w-5 text-blue" />
         <Typography>Collections</Typography>
       </Link>
+
+      <UserOverlay />
     </nav>
   );
 };

@@ -1,19 +1,8 @@
-import {
-  Arg,
-  Authorized,
-  Ctx,
-  Mutation,
-  Query,
-  Resolver,
-} from 'type-graphql';
-import {
-  CreateUserInput,
-  LoginInput,
-  User,
-  UserWithToken,
-} from '../schema/user.schema';
-import UserService from '../service/user.service';
-import { IContext } from '../types';
+import { Arg, Ctx, Mutation, Query, Resolver } from "type-graphql";
+import { CreateUserInput, LoginInput, User, UserWithToken } from "../schema/user.schema";
+import { ReturnType } from "../schema/default.schema";
+import UserService from "../service/user.service";
+import { IContext } from "../types";
 
 @Resolver()
 export default class UserResolver {
@@ -21,20 +10,18 @@ export default class UserResolver {
     this.userService = new UserService();
   }
 
-  @Mutation(() => User)
-  createUser(@Arg('input') input: CreateUserInput) {
+  @Mutation(() => ReturnType)
+  createUser(@Arg("input") input: CreateUserInput) {
     return this.userService.createUser(input);
   }
 
   @Mutation(() => UserWithToken)
-  login(@Arg('input') input: LoginInput, @Ctx() context: IContext) {
-    return this.userService.login(input, context);
+  login(@Arg("input") input: LoginInput) {
+    return this.userService.login(input);
   }
 
-  @Authorized()
   @Query(() => User)
   me(@Ctx() context: IContext) {
-    console.log('tak');
     return context.user;
   }
 }

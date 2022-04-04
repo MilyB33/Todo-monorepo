@@ -13,5 +13,5 @@ export const trimWhitespaces = (ob: IObject) => {
     }
   }
 
-  return ob; // Probably needs to be returned new object to avoid mutation
+  return { ...ob }; // Probably needs to be returned new object to avoid mutation
 };

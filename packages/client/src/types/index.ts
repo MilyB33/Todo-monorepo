@@ -32,3 +32,11 @@ export interface Filters {
   genres: string[];
   rating: string[];
 }
+
+// Store Payload Types
+export interface ILogin {
+  token: string;
+  username: string;
+  email: string;
+  _id: string;
+}

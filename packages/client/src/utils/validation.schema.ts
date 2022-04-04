@@ -7,10 +7,11 @@ const minLog = (min: number, label: string) => `${label} must be at least ${min}
 const maxLog = (max: number, label: string) => `${label} must be less than ${max} characters`;
 
 const LoginSchema = Yup.object().shape({
-  username: Yup.string()
-    .min(3, minLog(3, "Username"))
-    .max(50, maxLog(50, "Username"))
-    .required("Username is required"),
+  email: Yup.string()
+    .email("Invalid email")
+    .min(3, minLog(3, "Email"))
+    .max(50, maxLog(50, "Email"))
+    .required("Email is required"),
   password: Yup.string()
     .min(8, minLog(8, "Password"))
     .max(50, maxLog(50, "Password"))
@@ -22,7 +23,11 @@ const RegisterSchema = Yup.object().shape({
     .min(3, minLog(3, "Username"))
     .max(50, maxLog(50, "Username"))
     .required("Required"),
-  email: Yup.string().email("Invalid email address").required("Required"),
+  email: Yup.string()
+    .email("Invalid email address")
+    .min(3, minLog(3, "Email"))
+    .max(50, maxLog(50, "Email"))
+    .required("Required"),
   password: Yup.string()
     .min(8, minLog(4, "Password"))
     .max(50, maxLog(50, "Password"))

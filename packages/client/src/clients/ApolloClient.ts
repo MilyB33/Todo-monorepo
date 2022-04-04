@@ -5,24 +5,31 @@ export const ApolloClient = new Client({
   cache: new InMemoryCache(),
 });
 
-ApolloClient.query({
-  query: gql`
-    query {
-      me {
-        username
-      }
-    }
-  `,
-});
-
-(() => {
-  console.log("tak");
-})();
-
 // Mutations:
 const CREATE_USER = gql`
-  mutation CreateUser($input: CreateUserInput!) {
+  mutation createUser($input: CreateUserInput!) {
     createUser(input: $input) {
+      message
+    }
+  }
+`;
+
+const LOGIN = gql`
+  mutation login($input: LoginInput!) {
+    login(input: $input) {
+      _id
+      username
+      email
+      token
+      message
+    }
+  }
+`;
+
+// Queries:
+const ME = gql`
+  query {
+    me {
       _id
       username
       email
@@ -34,5 +41,6 @@ export const queries = {
   query: {},
   mutation: {
     CREATE_USER,
+    LOGIN,
   },
 };

@@ -1,4 +1,6 @@
 import { Routes, Route, useLocation } from "react-router-dom";
+import Protected from "./Protected";
+import Redirect from "./Redirect";
 
 import MainLayout from "../Layouts/MainLayout";
 import PageLayout from "../Layouts/PageLayout";
@@ -15,11 +17,16 @@ const Router = () => {
       <Routes>
         <Route path="/" element={<App />}>
           <Route element={<MainLayout />}>
-            <Route index element={<HomePage />} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/register" element={<RegisterPage />} />
-            <Route element={<PageLayout />}>
-              <Route path="/dashboard" element={<Dashboard />} />
+            <Route element={<Redirect />}>
+              <Route index element={<HomePage />} />
+              <Route path="/login" element={<LoginPage />} />
+              <Route path="/register" element={<RegisterPage />} />
+            </Route>
+
+            <Route element={<Protected />}>
+              <Route element={<PageLayout />}>
+                <Route path="/dashboard" element={<Dashboard />} />
+              </Route>
             </Route>
           </Route>
         </Route>

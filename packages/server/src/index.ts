@@ -1,28 +1,28 @@
-import dotenv from 'dotenv';
+import dotenv from "dotenv";
 dotenv.config();
-import 'reflect-metadata';
-import express from 'express';
-import { buildSchema } from 'type-graphql';
-import { ApolloServer } from 'apollo-server-express';
+import "reflect-metadata";
+import express from "express";
+import { buildSchema } from "type-graphql";
+import { ApolloServer } from "apollo-server-express";
 import {
   ApolloServerPluginLandingPageGraphQLPlayground,
   ApolloServerPluginLandingPageProductionDefault,
-} from 'apollo-server-core';
-import cookieParser from 'cookie-parser';
+} from "apollo-server-core";
+import cookieParser from "cookie-parser";
 
-import { connectToMongo } from './utils/mongo';
-import { resolvers } from './resolvers';
-import { verifyJwt } from './utils/jwt';
-import { User } from './schema/user.schema';
-import config from 'config';
-import { IContext } from './types';
-import authChecker from './utils/authChecker';
+import { connectToMongo } from "./utils/mongo";
+import { resolvers } from "./resolvers";
+import { verifyJwt } from "./utils/jwt";
+import { User } from "./schema/user.schema";
+import config from "config";
+import { IContext } from "./types";
+import authChecker from "./utils/authChecker";
 
 (async () => {
   const schema = await buildSchema({
     resolvers,
     authChecker,
-    authMode: 'null',
+    authMode: "null",
   });
 
   // init express server
@@ -36,15 +36,17 @@ import authChecker from './utils/authChecker';
     context: (ctx: IContext) => {
       const context = ctx;
 
-      if (ctx.req.cookies.accessToken) {
-        const user = verifyJwt<User>(ctx.req.cookies.accessToken);
-        ctx.user = user;
+      const token = ctx.req.headers.authorization || "";
+
+      if (token.length > 0) {
+        const user = verifyJwt<User>(token.split(" ")[1]);
+        context.user = user;
       }
 
       return context;
     },
     plugins: [
-      process.env.NODE_ENV === 'production'
+      process.env.NODE_ENV === "production"
         ? ApolloServerPluginLandingPageProductionDefault()
         : ApolloServerPluginLandingPageGraphQLPlayground(),
     ],
@@ -56,15 +58,13 @@ import authChecker from './utils/authChecker';
 
   server.applyMiddleware({
     app,
-    path: '/api/graphql',
+    path: "/api/graphql",
   });
 
-  const port = config.get('port');
+  const port = config.get("port");
 
   app.listen({ port }, () => {
-    console.log(
-      `Apollo Server on http://localhost:${port}/api/graphql`
-    );
+    console.log(`Apollo Server on http://localhost:${port}/api/graphql`);
   });
 
   connectToMongo();

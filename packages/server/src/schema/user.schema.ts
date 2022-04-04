@@ -1,28 +1,27 @@
-import {
-  getModelForClass,
-  prop,
-  ReturnModelType,
-  queryMethod,
-  pre,
-} from '@typegoose/typegoose';
-import bcrypt from 'bcrypt';
-import { AsQueryMethod } from '@typegoose/typegoose/lib/types';
-import { IsEmail, MaxLength, MinLength } from 'class-validator';
-import { Field, InputType, ObjectType } from 'type-graphql';
+import { getModelForClass, prop, ReturnModelType, queryMethod, pre } from "@typegoose/typegoose";
+import bcrypt from "bcrypt";
+import { AsQueryMethod } from "@typegoose/typegoose/lib/types";
+import { IsEmail, MaxLength, MinLength } from "class-validator";
+import { Field, InputType, ObjectType } from "type-graphql";
 
-function findByEmail(
-  this: ReturnModelType<typeof User, QueryHelpers>,
-  email: User['email']
-) {
+function findByEmail(this: ReturnModelType<typeof User, QueryHelpers>, email: User["email"]) {
   return this.findOne({ email });
+}
+
+function findByUsername(
+  this: ReturnModelType<typeof User, QueryHelpers>,
+  username: User["username"]
+) {
+  return this.findOne({ username });
 }
 
 interface QueryHelpers {
   findByEmail: AsQueryMethod<typeof findByEmail>;
+  findByUsername: AsQueryMethod<typeof findByUsername>;
 }
 
-@pre<User>('save', async function () {
-  if (!this.isModified('password')) return;
+@pre<User>("save", async function () {
+  if (!this.isModified("password")) return;
 
   const salt = await bcrypt.genSalt(10);
 
@@ -32,9 +31,10 @@ interface QueryHelpers {
 })
 @ObjectType()
 @queryMethod(findByEmail)
+@queryMethod(findByUsername)
 export class User {
   @Field(() => String)
-  _id: string;
+  readonly _id: string;
 
   @Field(() => String)
   @prop({ required: true })
@@ -43,6 +43,9 @@ export class User {
   @Field(() => String)
   @prop({ required: true })
   email: string;
+
+  @Field(() => String, { nullable: true })
+  message?: string;
 
   @prop({ required: true })
   password: string;
@@ -54,9 +57,7 @@ export class UserWithToken extends User {
   token: string;
 }
 
-export const UserModel = getModelForClass<typeof User, QueryHelpers>(
-  User
-);
+export const UserModel = getModelForClass<typeof User, QueryHelpers>(User);
 
 @InputType()
 export class CreateUserInput {
@@ -68,10 +69,10 @@ export class CreateUserInput {
   email: string;
 
   @MinLength(8, {
-    message: 'Password must be at least 8 characters long',
+    message: "Password must be at least 8 characters long",
   })
   @MaxLength(20, {
-    message: 'Password must be at most 20 characters long',
+    message: "Password must be at most 20 characters long",
   })
   @Field(() => String)
   password: string;
