@@ -3,6 +3,9 @@ import bcrypt from "bcrypt";
 import { AsQueryMethod } from "@typegoose/typegoose/lib/types";
 import { IsEmail, MaxLength, MinLength } from "class-validator";
 import { Field, InputType, ObjectType } from "type-graphql";
+import { MessageResponse } from "./default.schema";
+import { ObjectIdScalar } from "../types";
+import { ObjectId } from "mongodb";
 
 function findByEmail(this: ReturnModelType<typeof User, QueryHelpers>, email: User["email"]) {
   return this.findOne({ email });
@@ -33,8 +36,8 @@ interface QueryHelpers {
 @queryMethod(findByEmail)
 @queryMethod(findByUsername)
 export class User {
-  @Field(() => String)
-  readonly _id: string;
+  @Field(() => ObjectIdScalar)
+  readonly _id: ObjectId;
 
   @Field(() => String)
   @prop({ required: true })
@@ -44,18 +47,21 @@ export class User {
   @prop({ required: true })
   email: string;
 
-  @Field(() => String, { nullable: true })
-  message?: string;
-
   @prop({ required: true })
   password: string;
 }
 
 @ObjectType()
-export class UserWithToken extends User {
-  @Field(() => String)
-  token: string;
+export class Auth {
+  @Field(() => User, { nullable: true })
+  user?: User;
+
+  @Field(() => String, { nullable: true })
+  token?: string;
 }
+
+@ObjectType()
+export class UserAuthResponse extends MessageResponse<Auth>(Auth) {}
 
 export const UserModel = getModelForClass<typeof User, QueryHelpers>(User);
 
@@ -85,4 +91,38 @@ export class LoginInput {
 
   @Field(() => String)
   password: string;
+}
+
+// @InputType()
+// export class UpdateUserInput {
+//   @Field(() => String)
+//   _id: string;
+
+//   @Field(() => String)
+//   username?: string;
+
+//   @IsEmail()
+//   @Field(() => String)
+//   email?: string;
+
+//   @MinLength(8, {
+//     message: "Password must be at least 8 characters long",
+//   })
+//   @MaxLength(20, {
+//     message: "Password must be at most 20 characters long",
+//   })
+//   @Field(() => String)
+//   password?: string;
+// }
+
+@InputType()
+export class UpdatePasswordInput {
+  @Field(() => ObjectIdScalar)
+  _id: ObjectId;
+
+  @Field(() => String)
+  password: string;
+
+  @Field(() => String)
+  newPassword: string;
 }

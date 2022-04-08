@@ -5,25 +5,36 @@ import { IContext } from "../types";
 
 class CollectionService {
   async createCollection(input: CreateCollectionInput, context: IContext) {
-    const user = await UserModel.findById(context.user!._id).lean();
+    const user = await UserModel.findById(context.res.locals.userId).lean();
 
     if (!user) {
       throw new ApolloError("User not found");
     }
 
-    return CollectionModel.create(input);
+    const collection = CollectionModel.create({
+      ...input,
+      tasks: [],
+    });
+
+    return {
+      data: collection,
+      message: "Collection created",
+    };
   }
 
   async getCollections(context: IContext) {
-    const user = await UserModel.findById(context.user!._id).lean();
+    const user = await UserModel.findById(context.res.locals.userId).lean();
 
     if (!user) {
       throw new ApolloError("User not found");
     }
 
-    console.log(user._id);
+    const collections = await CollectionModel.find({ owner: user._id }).lean();
 
-    return CollectionModel.find({ owner: user._id }).lean();
+    return {
+      data: { collections },
+      message: "Collections found",
+    };
   }
 }
 

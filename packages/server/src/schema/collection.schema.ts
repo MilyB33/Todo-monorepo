@@ -1,7 +1,8 @@
 import { getModelForClass, prop } from "@typegoose/typegoose";
 import { Field, InputType, ObjectType } from "type-graphql";
 import { ObjectIdScalar } from "../types";
-import * as mongoose from "mongoose";
+import { ObjectId } from "mongodb";
+import { MessageResponse } from "./default.schema";
 
 @ObjectType()
 export class Collection {
@@ -18,19 +19,28 @@ export class Collection {
 
   @Field(() => String)
   @prop({ required: true })
-  icon: string;
+  iconUrl: string;
 
   @Field(() => ObjectIdScalar)
   @prop({ required: true })
-  owner: mongoose.Types.ObjectId;
+  owner: ObjectId;
 
-  @Field(() => [ObjectIdScalar])
+  @Field(() => [ObjectIdScalar], { nullable: true })
   @prop({ required: true })
-  tasks: mongoose.Types.ObjectId[];
-
-  @Field(() => String)
-  message: string;
+  tasks: ObjectId[];
 }
+
+@ObjectType()
+export class Collections {
+  @Field(() => [Collection]!, { nullable: true })
+  collections: Collection[];
+}
+
+@ObjectType()
+export class CollectionResponse extends MessageResponse<Collection>(Collection) {}
+
+@ObjectType()
+export class CollectionsResponse extends MessageResponse<Collections>(Collections) {}
 
 export const CollectionModel = getModelForClass<typeof Collection>(Collection);
 
@@ -43,10 +53,10 @@ export class CreateCollectionInput {
   color: string;
 
   @Field(() => String)
-  icon: string;
+  iconUrl: string;
 
   @Field(() => ObjectIdScalar)
-  owner: mongoose.Types.ObjectId;
+  owner: ObjectId;
 }
 
 @InputType()

@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { User } from "../schema/user.schema";
 import { GraphQLScalarType, Kind } from "graphql";
-import * as mongoose from "mongoose";
+import { ObjectId } from "mongodb";
 
 // Config types
 
@@ -12,28 +12,30 @@ export interface IContext {
 }
 
 // GraphQl types
+export type Ref<T> = T | ObjectId;
+
 export const ObjectIdScalar = new GraphQLScalarType({
   name: "ObjectId",
-  description: "MongoDB ObjectId",
+  description: "Mongo object id scalar type",
   serialize(value: unknown): string {
-    if (!(value instanceof mongoose.Types.ObjectId)) {
+    if (!(value instanceof ObjectId)) {
       throw new Error("ObjectIdScalar can only serialize ObjectId values");
     }
 
     return value.toHexString();
   },
-  parseValue(value: unknown): mongoose.Types.ObjectId {
+  parseValue(value: unknown): ObjectId {
     if (typeof value !== "string") {
       throw new Error("ObjectIdScalar can only parse string values");
     }
 
-    return new mongoose.Types.ObjectId(value);
+    return new ObjectId(value);
   },
-  parseLiteral(ast): mongoose.Types.ObjectId {
+  parseLiteral(ast): ObjectId {
     if (ast.kind !== Kind.STRING) {
       throw new Error("ObjectIdScalar can only parse string values");
     }
 
-    return new mongoose.Types.ObjectId(ast.value);
+    return new ObjectId(ast.value);
   },
 });

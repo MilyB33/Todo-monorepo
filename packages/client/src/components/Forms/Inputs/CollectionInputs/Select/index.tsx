@@ -1,12 +1,11 @@
 import { useState } from "react";
-import { DefaultProps } from "../../../../../types";
+import { DefaultProps, IIcon } from "../../../../../types";
 import Typography from "../../../../Typography";
 import { getIn } from "formik";
 import { Dropdown as Input, DropdownChangeParams } from "primereact/dropdown";
-import archiveIcon from "../../../../../assets/archiveX16.png";
-import archive2Icon from "../../../../../assets/archive2X16.png";
 import SelectItemTemplate from "./SelectItemTemplate";
 import OptionItemTemplate from "./OptionItemTemplate";
+import { useAppSelector } from "../../../../../store/app/hooks";
 
 const Select = (props: DefaultProps) => {
   const {
@@ -16,12 +15,14 @@ const Select = (props: DefaultProps) => {
     placeholder,
   } = props;
 
+  const { defaultIcons } = useAppSelector((state) => state.app);
+
   const [inputValue, setInputValue] = useState(value);
 
-  const values = [
-    { label: "Archive", value: archiveIcon },
-    { label: "Archive 2", value: archive2Icon },
-  ];
+  const values = defaultIcons.map((icon: IIcon) => ({
+    label: icon.name,
+    value: icon.url,
+  }));
 
   const hasError = Boolean(getIn(errors, name) && getIn(touched, name));
 

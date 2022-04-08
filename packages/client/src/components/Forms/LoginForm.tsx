@@ -4,7 +4,7 @@ import Typography from "../Typography";
 import TextInput from "./Inputs/AuthInputs/TextInput";
 import Password from "./Inputs/AuthInputs/Password";
 import Checkbox from "./Inputs/AuthInputs/Checkbox";
-import SubmitButton from "../Generic/SubmitButton";
+import SubmitButton from "../Buttons/SubmitButton";
 import validationSchema from "../../utils/validation.schema";
 import { isEveryTouched } from "../../utils/isEveryTouched";
 import { Link } from "react-router-dom";

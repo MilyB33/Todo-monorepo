@@ -35,8 +35,25 @@ export interface Filters {
 
 // Store Payload Types
 export interface ILogin {
+  user: {
+    _id: string;
+    username: string;
+    email: string;
+  };
   token: string;
-  username: string;
-  email: string;
+}
+
+export interface IIcon {
+  name: string;
+  fileId: string;
+  url: string;
+}
+
+export interface ICollection {
   _id: string;
+  name: string;
+  color: string;
+  iconUrl: string;
+  owner: string;
+  tasks: string[];
 }

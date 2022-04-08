@@ -1,8 +1,9 @@
-import { Arg, Ctx, Mutation, Query, Resolver } from "type-graphql";
-import { CreateUserInput, LoginInput, User, UserWithToken } from "../schema/user.schema";
-import { ReturnType } from "../schema/default.schema";
+import { Arg, Authorized, Ctx, Mutation, Query, Resolver } from "type-graphql";
+import { User } from "../schema/user.schema";
 import UserService from "../service/user.service";
 import { IContext } from "../types";
+import { UpdatePasswordInput } from "../schema/user.schema";
+import { OnlyMessageResponse } from "../schema/default.schema";
 
 @Resolver()
 export default class UserResolver {
@@ -10,16 +11,13 @@ export default class UserResolver {
     this.userService = new UserService();
   }
 
-  @Mutation(() => ReturnType)
-  createUser(@Arg("input") input: CreateUserInput) {
-    return this.userService.createUser(input);
+  @Authorized()
+  @Mutation(() => OnlyMessageResponse)
+  updatePassword(@Arg("input") input: UpdatePasswordInput) {
+    return this.userService.updatePassword(input);
   }
 
-  @Mutation(() => UserWithToken)
-  login(@Arg("input") input: LoginInput) {
-    return this.userService.login(input);
-  }
-
+  @Authorized()
   @Query(() => User)
   me(@Ctx() context: IContext) {
     return context.user;

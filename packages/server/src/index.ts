@@ -9,20 +9,25 @@ import {
   ApolloServerPluginLandingPageProductionDefault,
 } from "apollo-server-core";
 import cookieParser from "cookie-parser";
-
+import path from "path";
 import { connectToMongo } from "./utils/mongo";
 import { resolvers } from "./resolvers";
-import { verifyJwt } from "./utils/jwt";
-import { User } from "./schema/user.schema";
 import config from "config";
 import { IContext } from "./types";
-import authChecker from "./utils/authChecker";
+import authChecker from "./middleware/authChecker";
+import { TypegooseMiddleware } from "./middleware/typegoose";
+import { ObjectId } from "mongodb";
+import { ObjectIdScalar } from "./types";
 
 (async () => {
   const schema = await buildSchema({
     resolvers,
     authChecker,
     authMode: "null",
+    emitSchemaFile: path.resolve(__dirname, "schema.gql"),
+    globalMiddlewares: [TypegooseMiddleware],
+    scalarsMap: [{ type: ObjectId, scalar: ObjectIdScalar }],
+    // validate: false,
   });
 
   // init express server
@@ -33,18 +38,7 @@ import authChecker from "./utils/authChecker";
   // create the apollo server
   const server = new ApolloServer({
     schema,
-    context: (ctx: IContext) => {
-      const context = ctx;
-
-      const token = ctx.req.headers.authorization || "";
-
-      if (token.length > 0) {
-        const user = verifyJwt<User>(token.split(" ")[1]);
-        context.user = user;
-      }
-
-      return context;
-    },
+    context: (ctx: IContext) => ctx,
     plugins: [
       process.env.NODE_ENV === "production"
         ? ApolloServerPluginLandingPageProductionDefault()

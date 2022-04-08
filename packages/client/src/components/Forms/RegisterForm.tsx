@@ -1,7 +1,7 @@
 import { Formik, Field } from "formik";
 import TextInput from "./Inputs/AuthInputs/TextInput";
 import Password from "./Inputs/AuthInputs/Password";
-import SubmitButton from "../Generic/SubmitButton";
+import SubmitButton from "../Buttons/SubmitButton";
 import validationSchema from "../../utils/validation.schema";
 import { isEveryTouched } from "../../utils/isEveryTouched";
 import AuthWrapper from "./Templates/AuthWrapper";
@@ -39,7 +39,7 @@ const RegisterForm = () => {
     <>
       <ToastMessage
         type={Boolean(error) ? "error" : "success"}
-        message={Boolean(error) ? error?.message : data?.createUser.message}
+        message={Boolean(error) ? error?.message : data?.register.message}
       />
       <AuthWrapper
         header={{

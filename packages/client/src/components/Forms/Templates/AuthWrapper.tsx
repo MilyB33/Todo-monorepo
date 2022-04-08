@@ -1,5 +1,5 @@
 import logo from "../../../assets/logoX128.png";
-import GoBackButton from "../../Generic/GoBackButton";
+import GoBackButton from "../../Buttons/GoBackButton";
 import Typography from "../../Typography";
 import { Link } from "react-router-dom";
 
