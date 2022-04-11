@@ -186,9 +186,11 @@ module.exports = {
     extend: {
       gridTemplateColumns: {
         layout: "minmax(250px,min-content) auto",
+        smLayout: "auto",
       },
       gridTemplateRows: {
         layout: "min-content auto",
+        smLayout: "auto",
       },
     },
   },

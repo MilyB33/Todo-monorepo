@@ -2,6 +2,7 @@ import { ApolloError } from "apollo-server-express";
 import bcrypt from "bcrypt";
 import { signJwt } from "../utils/jwt";
 import { CreateUserInput, LoginInput, UserModel } from "../schema/user.schema";
+import { IContext } from "../types";
 
 class AuthService {
   async register(input: CreateUserInput) {
@@ -33,6 +34,32 @@ class AuthService {
 
     if (!passwordIsValid) {
       throw new ApolloError("Invalid password");
+    }
+
+    const token = signJwt({
+      _id: user._id,
+      email: user.email,
+      username: user.username,
+    });
+
+    return {
+      data: {
+        user: {
+          _id: user._id,
+          email: user.email,
+          username: user.username,
+        },
+        token,
+      },
+      message: "User logged in",
+    };
+  }
+
+  async me(context: IContext) {
+    const user = await UserModel.findById(context.res.locals.userId).lean();
+
+    if (!user) {
+      throw new ApolloError("User not found");
     }
 
     const token = signJwt({

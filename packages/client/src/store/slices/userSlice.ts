@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { ICollection } from "../../types";
+import { RootState } from "../app/store";
 
 interface IState {
   collections: ICollection[];
@@ -29,6 +30,10 @@ export const userSlice = createSlice({
     },
   },
 });
+
+export const selectCollection = (state: RootState) => (id: string) => {
+  return state.user.collections.find((collection) => collection._id === id);
+};
 
 export const { setCollections, addCollection, removeCollection, clearCollections } =
   userSlice.actions;

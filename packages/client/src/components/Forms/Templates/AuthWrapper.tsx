@@ -1,5 +1,5 @@
 import logo from "../../../assets/logoX128.png";
-import GoBackButton from "../../Buttons/GoBackButton";
+import BackToHomeButton from "../../Buttons/BackToHomeButton";
 import Typography from "../../Typography";
 import { Link } from "react-router-dom";
 
@@ -19,7 +19,7 @@ interface IPropTypes {
 function AuthWrapper({ children, header, bottom }: IPropTypes) {
   return (
     <section className="bg-gray-200 flex flex-col gap-5 justify-center items-center relative p-5">
-      <GoBackButton />
+      <BackToHomeButton />
 
       <img src={logo} alt="logo" />
 

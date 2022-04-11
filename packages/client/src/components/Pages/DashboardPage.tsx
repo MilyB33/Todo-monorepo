@@ -1,9 +1,11 @@
 import Typography from "../Typography";
 import SubPageButton from "../Collections/SubPageButton";
+import { useAuth } from "../../hooks/useAuth";
 
-const Dashboard = () => {
+const DashboardPage = () => {
+  const { user } = useAuth();
   return (
-    <main className="flex flex-col items-center justify-center col-auto">
+    <main className="flex flex-col items-center justify-center ">
       <header className="grid gap-8">
         <Typography classNames="font-bold" variant="h2">
           Dashboard
@@ -14,7 +16,7 @@ const Dashboard = () => {
             Good morning,
           </Typography>
           <Typography classNames="font-bold" variant="h1">
-            Jane Doe
+            {user.username}
           </Typography>
         </div>
 
@@ -27,4 +29,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default DashboardPage;

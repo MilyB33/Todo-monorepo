@@ -36,4 +36,10 @@
 
     @apply !text-text !border-text;
   }
+
+  .header .p-accordion-header-link,
+  .header .p-accordion-content {
+    @apply !p-0;
+    background: transparent;
+  }
 }

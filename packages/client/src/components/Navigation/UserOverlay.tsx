@@ -59,7 +59,7 @@ const UserOverlay = () => {
         onClick={handleToogle}
         aria-controls="popup_menu"
         aria-haspopup
-        className="text-text hover:!text-text bg-pink-300 p-2 rounded-full hover:!bg-pink-200 !transition-colors border-none"
+        className="text-text hover:!text-text bg-pink-300 p-3 rounded-full hover:!bg-pink-200 !transition-colors border-none"
       />
     </div>
   );

@@ -51,6 +51,16 @@ const LOGIN = gql`
 const CREATE_COLLECTION = gql`
   mutation createCollection($input: CreateCollectionInput!) {
     createCollection(input: $input) {
+      data {
+        collection {
+          _id
+          name
+          color
+          iconUrl
+          owner
+          tasks
+        }
+      }
       message
     }
   }
@@ -60,9 +70,15 @@ const CREATE_COLLECTION = gql`
 const ME = gql`
   query {
     me {
-      _id
-      username
-      email
+      data {
+        user {
+          _id
+          username
+          email
+        }
+        token
+      }
+      message
     }
   }
 `;
@@ -91,8 +107,12 @@ const GET_COLLECTIONS = gql`
           name
           color
           iconUrl
-          owner
-          tasks
+          tasks {
+            _id
+            description
+            date
+            completed
+          }
         }
       }
       message
@@ -102,6 +122,7 @@ const GET_COLLECTIONS = gql`
 
 export const queries = {
   query: {
+    ME,
     DEFAULT_ICONS,
     GET_COLLECTIONS,
   },

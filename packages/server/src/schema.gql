@@ -13,12 +13,12 @@ type Collection {
   color: String!
   iconUrl: String!
   name: String!
-  owner: ObjectId!
-  tasks: [ObjectId!]
+  owner: User!
+  tasks: [Task!]
 }
 
 type CollectionResponse {
-  data: Collection
+  data: OneCollection
   message: String!
 }
 
@@ -36,6 +36,12 @@ input CreateCollectionInput {
   iconUrl: String!
   name: String!
   owner: ObjectId!
+}
+
+input CreateTaskInput {
+  collectionId: ObjectId!
+  date: String!
+  description: String!
 }
 
 input CreateUserInput {
@@ -74,13 +80,24 @@ input LoginInput {
 
 type Mutation {
   createCollection(input: CreateCollectionInput!): CollectionResponse!
+  createTask(input: CreateTaskInput!): TaskResponse!
+  deleteTask(input: TaskIDInput!): TaskResponse!
   login(input: LoginInput!): UserAuthResponse!
   register(input: CreateUserInput!): OnlyMessageResponse!
   updatePassword(input: UpdatePasswordInput!): OnlyMessageResponse!
+  updateTask(input: UpdateTaskInput!): TaskResponse!
 }
 
 """Mongo object id scalar type"""
 scalar ObjectId
+
+type OneCollection {
+  collection: Collection
+}
+
+type OneTask {
+  task: Task
+}
 
 type OnlyMessageResponse {
   message: String!
@@ -89,7 +106,9 @@ type OnlyMessageResponse {
 type Query {
   getCollections: CollectionsResponse!
   getImages(input: SearchImageInput!): ImageResponse!
-  me: User!
+  getTask(input: TaskIDInput!): TaskResponse!
+  getTasks: TasksResponse!
+  me: UserAuthResponse!
 }
 
 input SearchImageInput {
@@ -97,10 +116,43 @@ input SearchImageInput {
   path: String
 }
 
+type Task {
+  _id: ObjectId!
+  completed: Boolean!
+  date: String!
+  description: String!
+  owner: User!
+}
+
+input TaskIDInput {
+  _id: ObjectId!
+}
+
+type TaskResponse {
+  data: OneTask
+  message: String!
+}
+
+type Tasks {
+  tasks: [Task!]
+}
+
+type TasksResponse {
+  data: Tasks
+  message: String!
+}
+
 input UpdatePasswordInput {
   _id: ObjectId!
   newPassword: String!
   password: String!
+}
+
+input UpdateTaskInput {
+  _id: ObjectId!
+  completed: Boolean
+  date: String
+  description: String
 }
 
 type User {

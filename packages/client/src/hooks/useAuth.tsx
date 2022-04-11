@@ -1,5 +1,5 @@
 import { useAppDispatch, useAppSelector } from "../store/app/hooks";
-import { useMutation } from "@apollo/client";
+import { useMutation, useLazyQuery } from "@apollo/client";
 import { useLocalStorage } from "./useLocalStorage";
 import { queries } from "../clients/ApolloClient";
 import { login, logout } from "../store/slices/authSlice";
@@ -8,6 +8,7 @@ import { clearCollections } from "../store/slices/userSlice";
 export const useAuth = () => {
   const dispatch = useAppDispatch();
   const [loginUser, { data, error, loading, client }] = useMutation(queries.mutation.LOGIN);
+
   const { isAuthenticated, user } = useAppSelector((state) => state.auth);
   const { setItem, removeItem } = useLocalStorage();
 

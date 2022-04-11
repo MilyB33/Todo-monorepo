@@ -1,7 +1,8 @@
 import { ApolloError } from "apollo-server-express";
 import { CreateCollectionInput, CollectionModel } from "../schema/collection.schema";
-import { UserModel } from "../schema/user.schema";
-import { IContext } from "../types";
+import { UserModel, User } from "../schema/user.schema";
+import { IContext, Ref } from "../types";
+import { Task, TaskModel } from "../schema/task.schema";
 
 class CollectionService {
   async createCollection(input: CreateCollectionInput, context: IContext) {
@@ -11,13 +12,15 @@ class CollectionService {
       throw new ApolloError("User not found");
     }
 
-    const collection = CollectionModel.create({
+    const collection = await CollectionModel.create({
       ...input,
       tasks: [],
     });
 
+    console.log(collection);
+
     return {
-      data: collection,
+      data: { collection },
       message: "Collection created",
     };
   }
@@ -35,6 +38,14 @@ class CollectionService {
       data: { collections },
       message: "Collections found",
     };
+  }
+
+  async getOwner(_id: Ref<User>) {
+    return await UserModel.findById(_id).lean();
+  }
+
+  async getTasks(ids: Ref<Task>[]) {
+    return await TaskModel.find({ _id: { $in: ids } }).lean();
   }
 }
 

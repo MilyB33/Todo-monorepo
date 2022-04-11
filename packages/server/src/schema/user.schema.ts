@@ -36,7 +36,7 @@ interface QueryHelpers {
 @queryMethod(findByEmail)
 @queryMethod(findByUsername)
 export class User {
-  @Field(() => ObjectIdScalar)
+  @Field()
   readonly _id: ObjectId;
 
   @Field(() => String)
@@ -92,28 +92,6 @@ export class LoginInput {
   @Field(() => String)
   password: string;
 }
-
-// @InputType()
-// export class UpdateUserInput {
-//   @Field(() => String)
-//   _id: string;
-
-//   @Field(() => String)
-//   username?: string;
-
-//   @IsEmail()
-//   @Field(() => String)
-//   email?: string;
-
-//   @MinLength(8, {
-//     message: "Password must be at least 8 characters long",
-//   })
-//   @MaxLength(20, {
-//     message: "Password must be at most 20 characters long",
-//   })
-//   @Field(() => String)
-//   password?: string;
-// }
 
 @InputType()
 export class UpdatePasswordInput {

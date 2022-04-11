@@ -9,7 +9,9 @@ import App from "../../App";
 import HomePage from "../Pages/HomePage";
 import LoginPage from "../Pages/LoginPage";
 import RegisterPage from "../Pages/RegisterPage";
-import Dashboard from "../Pages/Dashboard";
+import DashboardPage from "../Pages/DashboardPage";
+import CollectionsPage from "../Pages/CollectionsPage";
+import CollectionPage from "../Pages/CollectionPage";
 
 const Router = () => {
   return (
@@ -25,7 +27,9 @@ const Router = () => {
 
             <Route element={<Protected />}>
               <Route element={<PageLayout />}>
-                <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/dashboard" element={<DashboardPage />} />
+                <Route path="/collections" element={<CollectionsPage />} />
+                <Route path="/collections/:collectionId" element={<CollectionPage />} />
               </Route>
             </Route>
           </Route>

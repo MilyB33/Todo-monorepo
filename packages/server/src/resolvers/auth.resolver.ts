@@ -1,7 +1,8 @@
-import { Arg, Mutation, Resolver } from "type-graphql";
+import { Arg, Ctx, Mutation, Query, Resolver, Authorized } from "type-graphql";
 import { CreateUserInput, LoginInput, UserAuthResponse } from "../schema/user.schema";
 import { OnlyMessageResponse } from "../schema/default.schema";
 import AuthService from "../service/auth.service";
+import { IContext } from "../types";
 
 @Resolver()
 export default class AuthResolver {
@@ -17,5 +18,11 @@ export default class AuthResolver {
   @Mutation(() => UserAuthResponse)
   async login(@Arg("input") input: LoginInput) {
     return this.authService.login(input);
+  }
+
+  @Authorized()
+  @Query(() => UserAuthResponse)
+  async me(@Ctx() context: IContext) {
+    return this.authService.me(context);
   }
 }

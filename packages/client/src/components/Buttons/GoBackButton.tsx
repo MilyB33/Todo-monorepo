@@ -1,17 +1,18 @@
-import { Button } from "primereact/button";
 import { useNavigate } from "react-router-dom";
+import { AiOutlineArrowLeft } from "react-icons/ai";
 
 const GoBackButton = () => {
   const navigate = useNavigate();
 
-  const handleGoBack = () => navigate("/");
+  const handleRedirect = () => navigate(-1);
 
   return (
-    <Button
-      onClick={handleGoBack}
-      icon="pi pi-home text-blue "
-      className="bg-text border-text   p-button-raised p-button-rounded p-button-lg absolute top-5 left-5"
-    />
+    <button
+      onClick={handleRedirect}
+      className="text-2xl hover:scale-110 transition-transform bg-surface-800 p-1 rounded"
+    >
+      <AiOutlineArrowLeft />
+    </button>
   );
 };
 

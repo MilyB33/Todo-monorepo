@@ -4,10 +4,12 @@ import Collections from "../Navigation/Collections";
 
 function PageLayout() {
   return (
-    <div className="h-full grid grid-cols-layout grid-rows-layout">
+    <div className="h-full grid grid-rows-layout">
       <TopNav />
-      <Collections />
-      <Outlet />
+      <div className="grid grid-cols-layout">
+        <Collections />
+        <Outlet />
+      </div>
     </div>
   );
 }

@@ -1,8 +1,10 @@
 import { getModelForClass, prop } from "@typegoose/typegoose";
 import { Field, InputType, ObjectType } from "type-graphql";
-import { ObjectIdScalar } from "../types";
+import { ObjectIdScalar, Ref } from "../types";
+import { User } from "./user.schema";
 import { ObjectId } from "mongodb";
 import { MessageResponse } from "./default.schema";
+import { Task } from "./task.schema";
 
 @ObjectType()
 export class Collection {
@@ -21,13 +23,13 @@ export class Collection {
   @prop({ required: true })
   iconUrl: string;
 
-  @Field(() => ObjectIdScalar)
-  @prop({ required: true })
-  owner: ObjectId;
+  @Field(() => User)
+  @prop({ ref: User, required: true })
+  owner: Ref<User>;
 
-  @Field(() => [ObjectIdScalar], { nullable: true })
-  @prop({ required: true })
-  tasks: ObjectId[];
+  @Field(() => [Task], { nullable: true })
+  @prop({ ref: Task, required: false, default: [] })
+  tasks: Ref<Task>[];
 }
 
 @ObjectType()
@@ -37,7 +39,13 @@ export class Collections {
 }
 
 @ObjectType()
-export class CollectionResponse extends MessageResponse<Collection>(Collection) {}
+export class OneCollection {
+  @Field(() => Collection, { nullable: true })
+  collection: Collection;
+}
+
+@ObjectType()
+export class CollectionResponse extends MessageResponse<OneCollection>(OneCollection) {}
 
 @ObjectType()
 export class CollectionsResponse extends MessageResponse<Collections>(Collections) {}

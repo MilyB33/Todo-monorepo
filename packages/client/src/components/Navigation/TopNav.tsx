@@ -10,7 +10,7 @@ const Navigation = () => {
         <ViewGridIcon className="h-5 w-5 text-blue" />
         <Typography>Dashboard</Typography>
       </Link>
-      <Link to="/dashboard" className="flex gap-2 hover:underline items-center">
+      <Link to="/collections" className="flex gap-2 hover:underline items-center">
         <CollectionIcon className="h-5 w-5 text-blue" />
         <Typography>Collections</Typography>
       </Link>
