@@ -26,6 +26,11 @@ export interface TextInputPropTypes extends DefaultProps {
   labelColor?: string;
 }
 
+export interface CalendarPropTypes extends DefaultProps<Date> {
+  isTime: boolean;
+  isIcon?: boolean;
+}
+
 export interface Filters {
   search: "";
   availibility: "available" | "unavailable" | "all";
@@ -34,12 +39,16 @@ export interface Filters {
 }
 
 // Store Payload Types
+export interface IUser {
+  _id: string;
+  name: string;
+  surname: string;
+  email: string;
+  avatar: string;
+}
+
 export interface ILogin {
-  user: {
-    _id: string;
-    username: string;
-    email: string;
-  };
+  user: IUser;
   token: string;
 }
 
@@ -55,5 +64,15 @@ export interface ICollection {
   color: string;
   iconUrl: string;
   owner: string;
-  tasks: string[];
+  tasks: ITask[];
+  isFavorite: boolean;
+}
+
+export interface ITask {
+  _id: string;
+  description: string;
+  date: string;
+  time: string;
+  completed: boolean;
+  collectionId: string;
 }

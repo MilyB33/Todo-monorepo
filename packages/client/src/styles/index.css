@@ -4,7 +4,7 @@
 
 @layer components {
   .text-input {
-    @apply !bg-surface-300  !text-text-secondary !border-surface-300 !shadow-lg !w-full;
+    @apply !bg-surface-300  !text-text-secondary !border-surface-300 !shadow-lg;
     border-radius: 5px;
   }
 
@@ -23,6 +23,19 @@
 
   .checkbox .p-checkbox-box {
     background-color: transparent;
+  }
+
+  .checkbox-task .p-checkbox-box {
+    background-color: transparent;
+    @apply !border-pink-300;
+  }
+
+  .checkbox-task .p-checkbox-box.p-highlight {
+    @apply !bg-pink-300;
+  }
+
+  .checkbox-task .p-checkbox-icon {
+    @apply !text-text;
   }
 
   .add-button {

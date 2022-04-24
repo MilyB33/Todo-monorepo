@@ -9,6 +9,7 @@ import {
 } from "../schema/task.schema";
 import { IContext } from "../types";
 import TaskService from "../service/task.service";
+import { OnlyMessageResponse } from "../schema/default.schema";
 
 @Resolver(() => Task)
 export default class TaskResolver {
@@ -41,7 +42,7 @@ export default class TaskResolver {
   }
 
   @Authorized()
-  @Mutation(() => TaskResponse)
+  @Mutation(() => OnlyMessageResponse)
   async deleteTask(@Arg("input") input: TaskIDInput, @Ctx() context: IContext) {
     return this.taskService.deleteTask(input, context);
   }

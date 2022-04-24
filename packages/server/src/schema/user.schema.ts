@@ -11,16 +11,8 @@ function findByEmail(this: ReturnModelType<typeof User, QueryHelpers>, email: Us
   return this.findOne({ email });
 }
 
-function findByUsername(
-  this: ReturnModelType<typeof User, QueryHelpers>,
-  username: User["username"]
-) {
-  return this.findOne({ username });
-}
-
 interface QueryHelpers {
   findByEmail: AsQueryMethod<typeof findByEmail>;
-  findByUsername: AsQueryMethod<typeof findByUsername>;
 }
 
 @pre<User>("save", async function () {
@@ -34,18 +26,25 @@ interface QueryHelpers {
 })
 @ObjectType()
 @queryMethod(findByEmail)
-@queryMethod(findByUsername)
 export class User {
   @Field()
   readonly _id: ObjectId;
 
   @Field(() => String)
   @prop({ required: true })
-  username: string;
+  name: string;
+
+  @Field(() => String)
+  @prop({ required: true })
+  surname: string;
 
   @Field(() => String)
   @prop({ required: true })
   email: string;
+
+  @Field(() => String)
+  @prop({ required: true, default: "https://ik.imagekit.io/eucxsqj51hzu/default/profile" })
+  avatar: string;
 
   @prop({ required: true })
   password: string;
@@ -63,12 +62,18 @@ export class Auth {
 @ObjectType()
 export class UserAuthResponse extends MessageResponse<Auth>(Auth) {}
 
+@ObjectType()
+export class UserResponse extends MessageResponse<User>(User) {}
+
 export const UserModel = getModelForClass<typeof User, QueryHelpers>(User);
 
 @InputType()
 export class CreateUserInput {
   @Field(() => String)
-  username: string;
+  name: string;
+
+  @Field(() => String)
+  surname: string;
 
   @IsEmail()
   @Field(() => String)
@@ -103,4 +108,19 @@ export class UpdatePasswordInput {
 
   @Field(() => String)
   newPassword: string;
+}
+
+@InputType()
+export class UpdateUserInput {
+  @Field(() => ObjectIdScalar)
+  _id: ObjectId;
+
+  @Field(() => String, { nullable: true })
+  name?: string;
+
+  @Field(() => String, { nullable: true })
+  surname?: string;
+
+  @Field(() => String, { nullable: true })
+  email?: string;
 }

@@ -19,9 +19,10 @@ const LoginSchema = Yup.object().shape({
 });
 
 const RegisterSchema = Yup.object().shape({
-  username: Yup.string()
-    .min(3, minLog(3, "Username"))
-    .max(50, maxLog(50, "Username"))
+  name: Yup.string().min(3, minLog(3, "Name")).max(50, maxLog(50, "Name")).required("Required"),
+  surname: Yup.string()
+    .min(3, minLog(3, "Surname"))
+    .max(50, maxLog(50, "Surname"))
     .required("Required"),
   email: Yup.string()
     .email("Invalid email address")
@@ -41,4 +42,50 @@ const RegisterSchema = Yup.object().shape({
     .required("Required"),
 });
 
-export default { LoginSchema, RegisterSchema };
+const UpdatePassowrdSchema = Yup.object().shape({
+  oldPassword: Yup.string()
+    .min(8, minLog(8, "Password"))
+    .max(50, maxLog(50, "Password"))
+    .required("Required"),
+  newPassword: Yup.string()
+    .min(8, minLog(8, "Password"))
+    .max(50, maxLog(50, "Password"))
+    .required("Required"),
+  confirmPassword: Yup.string()
+    .oneOf([Yup.ref("newPassword"), null], "Passwords must match")
+    .required("Required"),
+});
+
+const TaskSchema = Yup.object().shape({
+  description: Yup.string()
+    .min(3, minLog(3, "Description"))
+    .max(50, maxLog(50, "Description"))
+    .required("Required"),
+  date: Yup.date().required("Required").typeError("Invalid date"),
+  time: Yup.date().required("Required").typeError("Invalid time"),
+});
+
+const DisplayNameSchema = Yup.object().shape({
+  name: Yup.string().min(3, minLog(3, "Name")).max(50, maxLog(50, "Name")).required("Required"),
+  surname: Yup.string()
+    .min(3, minLog(3, "Surname"))
+    .max(50, maxLog(50, "Surname"))
+    .required("Required"),
+});
+
+const EmailSchema = Yup.object().shape({
+  email: Yup.string()
+    .email("Invalid email")
+    .min(3, minLog(3, "Email"))
+    .max(50, maxLog(50, "Email"))
+    .required("Required"),
+});
+
+export default {
+  LoginSchema,
+  RegisterSchema,
+  TaskSchema,
+  UpdatePassowrdSchema,
+  DisplayNameSchema,
+  EmailSchema,
+};

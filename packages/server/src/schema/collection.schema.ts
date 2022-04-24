@@ -8,8 +8,8 @@ import { Task } from "./task.schema";
 
 @ObjectType()
 export class Collection {
-  @Field(() => String)
-  readonly _id: string;
+  @Field(() => ObjectIdScalar)
+  readonly _id: ObjectId;
 
   @Field(() => String)
   @prop({ required: true })
@@ -30,6 +30,10 @@ export class Collection {
   @Field(() => [Task], { nullable: true })
   @prop({ ref: Task, required: false, default: [] })
   tasks: Ref<Task>[];
+
+  @Field(() => Boolean)
+  @prop({ required: true, default: false })
+  isFavorite: boolean;
 }
 
 @ObjectType()
@@ -63,12 +67,30 @@ export class CreateCollectionInput {
   @Field(() => String)
   iconUrl: string;
 
-  @Field(() => ObjectIdScalar)
-  owner: ObjectId;
+  @Field(() => Boolean, { nullable: true })
+  isFavorite?: boolean;
 }
 
 @InputType()
-export class DeleteCollectionInput {
-  @Field(() => String)
-  _id: string;
+export class CollectionIDInput {
+  @Field(() => ObjectIdScalar)
+  _id: ObjectId;
+}
+
+@InputType()
+export class UpdateCollectionInput {
+  @Field(() => ObjectIdScalar)
+  _id: ObjectId;
+
+  @Field(() => String, { nullable: true })
+  name?: string;
+
+  @Field(() => String, { nullable: true })
+  color?: string;
+
+  @Field(() => String, { nullable: true })
+  iconUrl?: string;
+
+  @Field(() => Boolean, { nullable: true })
+  isFavorite?: boolean;
 }

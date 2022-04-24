@@ -18,6 +18,10 @@ export class Task {
   @prop({ required: true })
   date: string;
 
+  @Field(() => String)
+  @prop({ required: true })
+  time: string;
+
   @Field(() => Boolean)
   @prop({ required: true })
   completed: boolean;
@@ -25,6 +29,10 @@ export class Task {
   @Field(() => User)
   @prop({ ref: User, required: true })
   owner: Ref<User>;
+
+  @Field(() => ObjectIdScalar)
+  @prop({ required: true })
+  collectionId: ObjectId;
 }
 
 @ObjectType()
@@ -54,6 +62,9 @@ export class CreateTaskInput {
 
   @Field(() => String)
   date: string;
+
+  @Field(() => String)
+  time: string;
 
   @Field(() => ObjectIdScalar)
   collectionId: ObjectId;

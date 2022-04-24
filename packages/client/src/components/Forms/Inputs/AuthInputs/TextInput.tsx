@@ -44,7 +44,7 @@ const TextInput = (props: TextInputPropTypes) => {
           name={name}
           value={inputValue}
           aria-describedby={name}
-          className={`${classNames} ${hasError ? "text-input--error" : ""}`}
+          className={`${classNames} ${hasError ? "text-input--error" : ""} !w-full`}
           onChange={handleChange}
           onBlur={handleBlur}
           placeholder={placeholder}

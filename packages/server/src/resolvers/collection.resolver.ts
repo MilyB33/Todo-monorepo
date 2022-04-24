@@ -4,16 +4,17 @@ import {
   CollectionsResponse,
   CollectionResponse,
   Collection,
+  CollectionIDInput,
+  UpdateCollectionInput,
 } from "../schema/collection.schema";
+import { OnlyMessageResponse } from "../schema/default.schema";
 import { IContext } from "../types";
 import CollectionService from "../service/collection.service";
-import ImageService from "../service/image.service";
 
 @Resolver(() => Collection)
 export default class CollectionResolver {
-  constructor(private collectionService: CollectionService, private imageService: ImageService) {
+  constructor(private collectionService: CollectionService) {
     this.collectionService = new CollectionService();
-    this.imageService = new ImageService();
   }
 
   @Authorized()
@@ -26,6 +27,18 @@ export default class CollectionResolver {
   @Query(() => CollectionsResponse)
   async getCollections(@Ctx() context: IContext) {
     return this.collectionService.getCollections(context);
+  }
+
+  @Authorized()
+  @Mutation(() => OnlyMessageResponse)
+  async deleteCollection(@Arg("input") input: CollectionIDInput) {
+    return this.collectionService.deleteCollection(input);
+  }
+
+  @Authorized()
+  @Mutation(() => CollectionResponse)
+  async updateCollection(@Arg("input") input: UpdateCollectionInput) {
+    return this.collectionService.updateCollection(input);
   }
 
   @FieldResolver()

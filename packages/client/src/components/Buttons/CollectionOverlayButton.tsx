@@ -1,28 +1,56 @@
 import React, { useRef } from "react";
 import { Menu } from "primereact/menu";
 import { Button } from "primereact/button";
+import { useAppDispatch } from "../../store/app/hooks";
+import { removeCollection } from "../../store/slices/userSlice";
+import { useMutation } from "@apollo/client";
+import { queries } from "../../clients/ApolloClient";
+import { useNavigate } from "react-router-dom";
+import { useToastMessage } from "../../hooks/useToastMessage";
 
 interface PropTypes {
   _id: string;
+  handleOpenDialog: () => void;
 }
 
-const UserOverlay = ({ _id }: PropTypes) => {
+const UserOverlay = ({ _id, handleOpenDialog }: PropTypes) => {
+  const { handleSuccess, handleError } = useToastMessage();
   const menu = useRef<Menu>(null);
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const [deleteCollection] = useMutation(queries.mutation.DELETE_COLLECTION, {
+    onCompleted: (data) => {
+      navigate("/collections");
+      console.log(_id);
+      dispatch(removeCollection(_id));
+      handleSuccess(data.deleteCollection.message);
+    },
+    onError: (error) => {
+      console.log(error.message);
+      handleError(error.message);
+    },
+  });
+
+  const handleDelete = () => {
+    deleteCollection({
+      variables: {
+        input: {
+          _id,
+        },
+      },
+    });
+  };
+
   const items = [
     {
       label: "Edit",
       icon: "pi pi-fw pi-pencil",
-      command: () => {},
+      command: handleOpenDialog,
     },
     {
       label: "Delete",
       icon: "pi pi-fw pi-trash",
-      command: () => {},
-    },
-    {
-      label: "More",
-      icon: "pi pi-fw pi-cog",
-      command: () => {},
+      command: handleDelete,
     },
   ];
 
@@ -33,7 +61,7 @@ const UserOverlay = ({ _id }: PropTypes) => {
   };
 
   return (
-    <div className="flex ml-auto items-center justify-center">
+    <div>
       <Menu model={items} popup ref={menu} id="popup_menu" />
       <Button
         icon="pi pi-ellipsis-h"

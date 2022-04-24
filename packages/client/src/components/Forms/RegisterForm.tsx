@@ -9,8 +9,8 @@ import WithConfig from "../../hoc/WithConfig";
 import { useMutation } from "@apollo/client";
 import { queries } from "../../clients/ApolloClient";
 import { trimWhitespaces } from "../../utils/trimWhitespaces";
-import ToastMessage from "../Generic/ToastMessage";
 import { useRedirect } from "../../hooks/useRedirect";
+import { useToastMessage } from "../../hooks/useToastMessage";
 
 const config = {
   classNames: "text-input",
@@ -22,14 +22,26 @@ const TextInputWithConfig = WithConfig(TextInput, config);
 const PasswordWithConfig = WithConfig(Password, config);
 
 const initialValues = {
-  username: "",
+  name: "",
+  surname: "",
   password: "",
   email: "",
   confirmPassword: "",
 };
 
 const RegisterForm = () => {
-  const [signUp, { data, loading, error }] = useMutation(queries.mutation.CREATE_USER);
+  const { handleSuccess, handleError } = useToastMessage();
+
+  const [signUp, { loading }] = useMutation(queries.mutation.REGISTER, {
+    onCompleted: (data) => {
+      handleSuccess(data.register.message);
+      timeoutRedirect();
+    },
+    onError: (error) => {
+      console.error(error.message);
+      handleError(error.message);
+    },
+  });
   const { timeoutRedirect } = useRedirect({
     to: "/",
     timeout: 2000,
@@ -37,10 +49,6 @@ const RegisterForm = () => {
 
   return (
     <>
-      <ToastMessage
-        type={Boolean(error) ? "error" : "success"}
-        message={Boolean(error) ? error?.message : data?.register.message}
-      />
       <AuthWrapper
         header={{
           pink: "Sign",
@@ -55,16 +63,12 @@ const RegisterForm = () => {
         <Formik
           initialValues={initialValues}
           validationSchema={validationSchema.RegisterSchema}
-          onSubmit={async (values) => {
+          onSubmit={(values) => {
             try {
               const trimmedValues = trimWhitespaces(values);
               delete trimmedValues.confirmPassword;
 
-              await signUp({ variables: { input: trimmedValues } });
-
-              if (error) {
-                console.error(error.message);
-              } else timeoutRedirect();
+              signUp({ variables: { input: trimmedValues } });
             } catch (err: any) {
               console.error(err.message);
             }
@@ -72,14 +76,23 @@ const RegisterForm = () => {
         >
           {(props) => (
             <form className="grid gap-3 lg:w-2/4">
-              <Field
-                name="username"
-                label="Username"
-                component={TextInputWithConfig}
-                setFieldValue={props.setFieldValue}
-                placeholder="Enter your username"
-                icon="pi pi-id-card"
-              />
+              <span className="flex justify-between gap-2">
+                <Field
+                  name="name"
+                  label="Name"
+                  component={TextInputWithConfig}
+                  setFieldValue={props.setFieldValue}
+                  placeholder="Enter your Name"
+                />
+
+                <Field
+                  name="surname"
+                  label="Surname"
+                  component={TextInputWithConfig}
+                  setFieldValue={props.setFieldValue}
+                  placeholder="Enter your Surname"
+                />
+              </span>
 
               <Field
                 name="email"

@@ -23,23 +23,61 @@ export const ApolloClient = new Client({
   cache: new InMemoryCache(),
 });
 
+// Fragments
+const USER_FIELDS = gql`
+  fragment UserFields on User {
+    _id
+    name
+    surname
+    email
+    avatar
+  }
+`;
+
+const TASK_FIELDS = gql`
+  fragment TaskFields on Task {
+    _id
+    description
+    date
+    time
+    completed
+    collectionId
+  }
+`;
+
+const COLLECTION_FIELDS = gql`
+  ${TASK_FIELDS}
+  fragment CollectionFields on Collection {
+    _id
+    name
+    color
+    iconUrl
+    isFavorite
+    owner {
+      _id
+    }
+    tasks {
+      ...TaskFields
+    }
+  }
+`;
+
 // Mutations:
-const CREATE_USER = gql`
+const REGISTER = gql`
   mutation register($input: CreateUserInput!) {
-    createUser(input: $input) {
+    register(input: $input) {
       message
     }
   }
 `;
 
 const LOGIN = gql`
+  ${USER_FIELDS}
   mutation login($input: LoginInput!) {
     login(input: $input) {
       data {
         user {
-          _id
-          username
-          email
+          ...UserFields
         }
         token
       }
@@ -49,16 +87,12 @@ const LOGIN = gql`
 `;
 
 const CREATE_COLLECTION = gql`
+  ${COLLECTION_FIELDS}
   mutation createCollection($input: CreateCollectionInput!) {
     createCollection(input: $input) {
       data {
         collection {
-          _id
-          name
-          color
-          iconUrl
-          owner
-          tasks
+          ...CollectionFields
         }
       }
       message
@@ -66,15 +100,92 @@ const CREATE_COLLECTION = gql`
   }
 `;
 
+const CREATE_TASK = gql`
+  ${TASK_FIELDS}
+  mutation createTask($input: CreateTaskInput!) {
+    createTask(input: $input) {
+      data {
+        task {
+          ...TaskFields
+        }
+      }
+      message
+    }
+  }
+`;
+
+const UPDATE_TASK = gql`
+  ${TASK_FIELDS}
+  mutation updateTask($input: UpdateTaskInput!) {
+    updateTask(input: $input) {
+      data {
+        task {
+          ...TaskFields
+        }
+      }
+      message
+    }
+  }
+`;
+
+const DELETE_TASK = gql`
+  mutation deleteTask($input: TaskIDInput!) {
+    deleteTask(input: $input) {
+      message
+    }
+  }
+`;
+
+const DELETE_COLLECTION = gql`
+  mutation deleteCollection($input: CollectionIDInput!) {
+    deleteCollection(input: $input) {
+      message
+    }
+  }
+`;
+
+const UPDATE_COLLECTION = gql`
+  ${COLLECTION_FIELDS}
+  mutation updateCollection($input: UpdateCollectionInput!) {
+    updateCollection(input: $input) {
+      data {
+        collection {
+          ...CollectionFields
+        }
+      }
+      message
+    }
+  }
+`;
+
+const UPDATE_PASSWORD = gql`
+  mutation updatePassword($input: UpdatePasswordInput!) {
+    updatePassword(input: $input) {
+      message
+    }
+  }
+`;
+
+const UPDATE_ACCOUNT = gql`
+  ${USER_FIELDS}
+  mutation updateUser($input: UpdateUserInput!) {
+    updateUser(input: $input) {
+      message
+      data {
+        ...UserFields
+      }
+    }
+  }
+`;
+
 // Queries:
 const ME = gql`
+  ${USER_FIELDS}
   query {
     me {
       data {
         user {
-          _id
-          username
-          email
+          ...UserFields
         }
         token
       }
@@ -99,20 +210,12 @@ const DEFAULT_ICONS = gql`
 `;
 
 const GET_COLLECTIONS = gql`
+  ${COLLECTION_FIELDS}
   query {
     getCollections {
       data {
         collections {
-          _id
-          name
-          color
-          iconUrl
-          tasks {
-            _id
-            description
-            date
-            completed
-          }
+          ...CollectionFields
         }
       }
       message
@@ -127,8 +230,15 @@ export const queries = {
     GET_COLLECTIONS,
   },
   mutation: {
-    CREATE_USER,
+    REGISTER,
     LOGIN,
     CREATE_COLLECTION,
+    CREATE_TASK,
+    UPDATE_TASK,
+    DELETE_TASK,
+    DELETE_COLLECTION,
+    UPDATE_COLLECTION,
+    UPDATE_PASSWORD,
+    UPDATE_ACCOUNT,
   },
 };

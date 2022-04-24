@@ -1,29 +1,25 @@
-import { useRef, useState, useEffect } from "react";
+import { useRef, useEffect } from "react";
 import { Messages } from "primereact/messages";
-import { Message } from "primereact/message";
+import { useToastMessage } from "../../hooks/useToastMessage";
 
-interface IPropTypes {
-  message?: string;
-  type: "success" | "error" | "warn" | "info";
-}
-
-const ErrorResponse = ({ message, type }: IPropTypes) => {
+const ErrorResponse = () => {
+  const { state } = useToastMessage();
   const messages = useRef<Messages>(null);
 
-  const showError = () => {
+  const showMessage = () => {
     messages.current!.show({
-      severity: type,
-      detail: message,
+      severity: state.type,
+      detail: state.message,
       closable: false,
       life: 2000,
     });
   };
 
   useEffect(() => {
-    if (message) {
-      showError();
+    if (state.message) {
+      showMessage();
     }
-  }, [message]);
+  }, [state]);
 
   return <Messages ref={messages} className="!fixed right-2 top-2 !z-50" />;
 };

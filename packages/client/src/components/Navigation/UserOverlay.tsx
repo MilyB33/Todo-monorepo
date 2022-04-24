@@ -9,7 +9,7 @@ const UserOverlay = () => {
   const navigate = useNavigate();
   const {
     handleLogout,
-    user: { username },
+    user: { name, surname },
   } = useAuth();
 
   const items = [
@@ -53,7 +53,7 @@ const UserOverlay = () => {
     <div className="flex ml-auto items-center justify-center">
       <Menu model={items} popup ref={menu} id="popup_menu" />
       <Button
-        label={username}
+        label={`${name} ${surname}`}
         icon="pi pi-bars"
         iconPos="right"
         onClick={handleToogle}

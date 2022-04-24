@@ -11,7 +11,6 @@ import { Link } from "react-router-dom";
 import AuthWrapper from "./Templates/AuthWrapper";
 import WithConfig from "../../hoc/WithConfig";
 import { trimWhitespaces } from "../../utils/trimWhitespaces";
-import ToastMessage from "../Generic/ToastMessage";
 
 const config = {
   classNames: "text-input",
@@ -30,16 +29,12 @@ const initialValues = {
 
 const LoginForm = () => {
   const {
-    query: { loading, message, error },
+    query: { loading },
     handleLogin,
   } = useAuth();
 
   return (
     <>
-      <ToastMessage
-        type={Boolean(error) ? "error" : "success"}
-        message={Boolean(error) ? error?.message : message}
-      />
       <AuthWrapper
         header={{
           pink: "Log",
@@ -54,14 +49,13 @@ const LoginForm = () => {
         <Formik
           initialValues={initialValues}
           validationSchema={validationSchema.LoginSchema}
-          onSubmit={async (values) => {
-            const trimmedValues = trimWhitespaces(values);
+          onSubmit={(values) => {
+            try {
+              const trimmedValues = trimWhitespaces(values);
 
-            await handleLogin(trimmedValues.email, trimmedValues.password);
-
-            if (error) {
-              console.error(error.message);
-              return;
+              handleLogin(trimmedValues.email, trimmedValues.password);
+            } catch (e) {
+              console.log(e);
             }
           }}
         >

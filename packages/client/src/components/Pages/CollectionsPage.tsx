@@ -3,13 +3,11 @@ import DashboardHeader from "../Header/DashboardHeader";
 
 const CollectionsPage = () => {
   return (
-    <main className="flex flex-col items-center gap-5 justify-center col-auto">
-      <section className="grid gap-5">
-        <DashboardHeader>Collections</DashboardHeader>
+    <section className="grid gap-5 mx-[15%]">
+      <DashboardHeader>Collections</DashboardHeader>
 
-        <CollectionsWrapper />
-      </section>
-    </main>
+      <CollectionsWrapper />
+    </section>
   );
 };
 

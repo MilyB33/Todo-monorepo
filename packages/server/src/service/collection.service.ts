@@ -1,5 +1,10 @@
 import { ApolloError } from "apollo-server-express";
-import { CreateCollectionInput, CollectionModel } from "../schema/collection.schema";
+import {
+  CreateCollectionInput,
+  CollectionModel,
+  CollectionIDInput,
+  UpdateCollectionInput,
+} from "../schema/collection.schema";
 import { UserModel, User } from "../schema/user.schema";
 import { IContext, Ref } from "../types";
 import { Task, TaskModel } from "../schema/task.schema";
@@ -14,10 +19,9 @@ class CollectionService {
 
     const collection = await CollectionModel.create({
       ...input,
+      owner: user._id,
       tasks: [],
     });
-
-    console.log(collection);
 
     return {
       data: { collection },
@@ -37,6 +41,44 @@ class CollectionService {
     return {
       data: { collections },
       message: "Collections found",
+    };
+  }
+
+  async deleteCollection(input: CollectionIDInput) {
+    const collection = await CollectionModel.findById(input._id).lean();
+
+    if (!collection) {
+      throw new ApolloError("Collection not found");
+    }
+
+    await TaskModel.deleteMany({ collectionId: input._id });
+
+    await CollectionModel.deleteOne({ _id: input._id });
+
+    return {
+      data: { collection },
+      message: "Collection deleted",
+    };
+  }
+
+  async updateCollection(input: UpdateCollectionInput) {
+    const collection = await CollectionModel.findById(input._id).lean();
+
+    if (!collection) {
+      throw new ApolloError("Collection not found");
+    }
+
+    const updatedCollection = await CollectionModel.findByIdAndUpdate(
+      input._id,
+      {
+        ...input,
+      },
+      { new: true }
+    ).lean();
+
+    return {
+      data: { collection: updatedCollection },
+      message: "Collection updated",
     };
   }
 

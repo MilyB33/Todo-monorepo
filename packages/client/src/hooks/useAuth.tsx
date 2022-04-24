@@ -1,46 +1,42 @@
 import { useAppDispatch, useAppSelector } from "../store/app/hooks";
-import { useMutation, useLazyQuery } from "@apollo/client";
+import { useMutation } from "@apollo/client";
+import { useToastMessage } from "./useToastMessage";
 import { useLocalStorage } from "./useLocalStorage";
 import { queries } from "../clients/ApolloClient";
 import { login, logout } from "../store/slices/authSlice";
 import { clearCollections } from "../store/slices/userSlice";
 
 export const useAuth = () => {
+  const { handleSuccess, handleError } = useToastMessage();
   const dispatch = useAppDispatch();
-  const [loginUser, { data, error, loading, client }] = useMutation(queries.mutation.LOGIN);
+  const [loginUser, { data, error, loading, client }] = useMutation(queries.mutation.LOGIN, {
+    onCompleted: (data) => {
+      const {
+        login: {
+          data: { token },
+        },
+      } = data;
+
+      setItem("token", token); // for now probably will be changed on server side to use cookie
+
+      handleSuccess(data.login.message);
+
+      setTimeout(() => {
+        // timeout to avoid instant redirect
+        dispatch(login(data.login.data));
+      }, 3000);
+    },
+    onError: (error) => {
+      console.log(error);
+      handleError(error.message);
+    },
+  });
 
   const { isAuthenticated, user } = useAppSelector((state) => state.auth);
   const { setItem, removeItem } = useLocalStorage();
 
-  const handleLogin = async (email: string, password: string) => {
-    try {
-      const res = await loginUser({ variables: { input: { email, password } } });
-
-      if (error) {
-        console.error(error.message);
-        return;
-      }
-
-      if (res) {
-        const {
-          login: {
-            data: { token },
-          },
-        } = res.data;
-
-        setItem("token", token);
-
-        setTimeout(() => {
-          // timeout to avoid instant redirect
-          dispatch(login(res.data.login.data));
-        }, 3000);
-      } else {
-        console.error("No data returned from login mutation");
-      }
-    } catch (e) {
-      console.error(e);
-    }
-  };
+  const handleLogin = (email: string, password: string) =>
+    loginUser({ variables: { input: { email, password } } });
 
   const handleLogout = () => {
     removeItem("token");

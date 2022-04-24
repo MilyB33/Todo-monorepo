@@ -2,13 +2,15 @@ import Typography from "../Typography";
 import { Link } from "react-router-dom";
 import { ICollection } from "../../types";
 import { Knob } from "primereact/knob";
-import CollectionOverlayButton from "../Buttons/CollectionOverlayButton";
 
 interface PropTypes {
   collection: ICollection;
 }
 
 const Collection = ({ collection }: PropTypes) => {
+  const completed = collection.tasks.filter((task) => task.completed).length;
+  const total = collection.tasks.length;
+
   return (
     <div className="hover:bg-gray-600 transition-colors cursor-pointer bg-gray-800 rounded ">
       <Link to={`/collections/${collection._id}`} className="grid gap-3 px-8 py-5">
@@ -20,10 +22,10 @@ const Collection = ({ collection }: PropTypes) => {
 
         <div className="flex items-end">
           <Typography variant="small" classNames="text-text-pink">
-            4 / 5 done
+            {completed}/{total}
           </Typography>
 
-          <Knob value={4} max={5} size={25} showValue={false} className="ml-auto" />
+          <Knob value={completed} max={total} size={25} showValue={false} className="ml-auto" />
         </div>
       </Link>
     </div>

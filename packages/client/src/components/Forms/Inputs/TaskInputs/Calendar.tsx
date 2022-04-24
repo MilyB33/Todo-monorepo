@@ -1,25 +1,62 @@
 import { useState } from "react";
 import { Calendar as CalendarInput, CalendarChangeParams } from "primereact/calendar";
-import { Dropdown } from "primereact/dropdown";
+import { CalendarPropTypes } from "../../../../types";
+import { getIn } from "formik";
+import Typography from "../../../Typography";
 
-const Calendar = () => {
-  let today = new Date();
-  let month = today.getMonth();
-  let year = today.getFullYear();
-  let prevMonth = month === 0 ? 11 : month - 1;
-  let prevYear = prevMonth === 11 ? year - 1 : year;
-  let nextMonth = month === 11 ? 0 : month + 1;
-  let nextYear = nextMonth === 0 ? year + 1 : year;
+const Calendar = (props: CalendarPropTypes) => {
+  const {
+    field: { name, value, onChange, onBlur },
+    form: { setFieldTouched, touched, errors },
+    placeholder,
+    label,
+    isTime = false,
+    isIcon = false,
+    classNames,
+  } = props;
 
-  const [date, setDate] = useState<Date | Date[] | undefined>(undefined);
+  const [date, setDate] = useState<Date | Date[] | undefined>(value);
 
-  const handleChange = (event: CalendarChangeParams) => {
-    setDate(event.value);
+  const handleChange = (e: CalendarChangeParams) => {
+    console.log(e.value);
+    setDate(e.value);
+    onChange(e);
+  };
+
+  const hasError = Boolean(getIn(errors, name) && getIn(touched, name));
+
+  const handleBlur = (e: React.FocusEvent<HTMLInputElement, Element>) => {
+    setFieldTouched(name, true, false);
+    onBlur(e);
   };
 
   return (
-    <div className="">
-      <CalendarInput value={date} onChange={handleChange} showIcon />
+    <div className={classNames}>
+      <label htmlFor={name} className={`block ${hasError ? "text-defaults-error" : "text-text"}`}>
+        {label}
+      </label>
+
+      <CalendarInput
+        id={name}
+        name={name}
+        inputClassName="!text-text-dark !text-center"
+        className="!bg-pink "
+        value={date}
+        onChange={handleChange}
+        showIcon={isIcon}
+        onBlur={handleBlur}
+        panelClassName="!bg-pink-300"
+        placeholder={placeholder}
+        timeOnly={isTime}
+        readOnlyInput
+      />
+
+      <Typography
+        variant="small"
+        classNames={`text-defaults-error min-h-[2.5ch] ${hasError ? "visible" : "invisible"}`}
+      >
+        {getIn(errors, name)}
+      </Typography>
     </div>
   );
 };

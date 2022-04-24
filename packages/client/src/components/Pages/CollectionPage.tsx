@@ -1,12 +1,18 @@
+import { useState } from "react";
 import Collection from "../Collection";
 import CollectionHeader from "../Header/CollectionHeader";
 
 const CollectionPage = () => {
+  const [showDialog, setShowDialog] = useState(false);
+
+  const handleOpen = () => setShowDialog(true);
+  const handleClose = () => setShowDialog(false);
+
   return (
-    <main className="flex flex-col gap-5 justify-center items-center">
-      <CollectionHeader />
-      <Collection />
-    </main>
+    <section className="grid gap-5 mx-[15%]">
+      <CollectionHeader handleOpenDialog={handleOpen} />
+      <Collection showDialog={showDialog} onHide={handleClose} />
+    </section>
   );
 };
 

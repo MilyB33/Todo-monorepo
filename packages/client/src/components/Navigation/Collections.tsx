@@ -1,17 +1,19 @@
 import Typography from "../Typography";
 import Collection from "../Collections/Collection";
-import CollectionNavForm from "../Forms/CollectionNavForm";
+import AddCollectionForm from "../Forms/AddCollectionForm";
 import { Accordion, AccordionTab } from "primereact/accordion";
 import { useQuery } from "@apollo/client";
 import { useAppDispatch, useAppSelector } from "../../store/app/hooks";
 import { queries } from "../../clients/ApolloClient";
 import { ProgressSpinner } from "primereact/progressspinner";
 import { ICollection } from "../../types";
-import { setCollections } from "../../store/slices/userSlice";
+import { setCollections, selectFavoriteCollections } from "../../store/slices/userSlice";
+import MoreButton from "../Buttons/MoreButton";
+import { ScrollPanel } from "primereact/scrollpanel";
 
 const Collections = () => {
   const dispatch = useAppDispatch();
-  const { collections } = useAppSelector((state) => state.user);
+  const favoriteCollections = useAppSelector(selectFavoriteCollections)(5);
   const { loading, error } = useQuery(queries.query.GET_COLLECTIONS, {
     onCompleted: (data) => {
       dispatch(setCollections(data.getCollections.data.collections));
@@ -19,32 +21,37 @@ const Collections = () => {
   });
 
   return (
-    <aside className="flex flex-col gap-5 h-full min-w-full bg-gray-800  overflow-y-auto overflow-x-hidden absolute sm:relative sm:min-w-[22rem]">
-      <Typography classNames="p-3" variant="h4">
-        Collections
-      </Typography>
+    <aside className="  bg-gray-800 h-full min-w-full   sm:relative sm:min-w-[22rem]">
+      <ScrollPanel style={{ width: "100%", height: "100%" }}>
+        <Typography classNames="p-3" variant="h4">
+          Collections
+        </Typography>
+        <section className="flex flex-col gap-5 min-w-full absolute">
+          <nav className="grid gap-5">
+            <section className="grid">
+              {loading ? (
+                <ProgressSpinner />
+              ) : error ? (
+                []
+              ) : (
+                favoriteCollections.map((collection: ICollection) => (
+                  <Collection key={collection._id} collection={collection} />
+                ))
+              )}
 
-      <nav className="grid gap-5">
-        <section>
-          {loading ? (
-            <ProgressSpinner />
-          ) : error ? (
-            []
-          ) : (
-            collections.map((collection: ICollection) => (
-              <Collection key={collection._id} collection={collection} />
-            ))
-          )}
+              <MoreButton />
+            </section>
+          </nav>
+
+          <div className="grid gap-5">
+            <Accordion>
+              <AccordionTab header="Add Collection" contentClassName="!bg-pink">
+                <AddCollectionForm />
+              </AccordionTab>
+            </Accordion>
+          </div>
         </section>
-      </nav>
-
-      <div className="grid gap-5 mt-auto">
-        <Accordion>
-          <AccordionTab header="Add Collection" contentClassName="!bg-pink">
-            <CollectionNavForm />
-          </AccordionTab>
-        </Accordion>
-      </div>
+      </ScrollPanel>
     </aside>
   );
 };

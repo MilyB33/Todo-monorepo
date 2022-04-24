@@ -3,11 +3,12 @@ import GoBackButton from "../Buttons/GoBackButton";
 
 interface PropTypes {
   children: React.ReactNode | string;
+  className?: string;
 }
 
-const DashboardHeader = ({ children }: PropTypes) => {
+const DashboardHeader = ({ children, className }: PropTypes) => {
   return (
-    <header className="flex gap-5 items-center">
+    <header className={`${className} flex gap-5 items-center`}>
       <GoBackButton />
 
       <Typography classNames="font-bold" variant="h2">

@@ -12,12 +12,6 @@ class AuthService {
       throw new ApolloError("User already exists");
     }
 
-    user = await UserModel.find().findByUsername(input.username);
-
-    if (user) {
-      throw new ApolloError("Username is already taken");
-    }
-
     UserModel.create(input);
 
     return { message: "User created", data: {} };
@@ -39,16 +33,13 @@ class AuthService {
     const token = signJwt({
       _id: user._id,
       email: user.email,
-      username: user.username,
+      name: user.name,
+      surname: user.surname,
     });
 
     return {
       data: {
-        user: {
-          _id: user._id,
-          email: user.email,
-          username: user.username,
-        },
+        user,
         token,
       },
       message: "User logged in",
@@ -65,7 +56,8 @@ class AuthService {
     const token = signJwt({
       _id: user._id,
       email: user.email,
-      username: user.username,
+      name: user.name,
+      surname: user.surname,
     });
 
     return {
@@ -73,7 +65,8 @@ class AuthService {
         user: {
           _id: user._id,
           email: user.email,
-          username: user.username,
+          name: user.name,
+          surname: user.surname,
         },
         token,
       },

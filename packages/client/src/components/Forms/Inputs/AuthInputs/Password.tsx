@@ -42,11 +42,11 @@ const Password = (props: TextInputPropTypes) => {
         name={name}
         value={inputValue}
         aria-describedby={name}
-        className="w-full"
-        inputClassName={`${classNames} ${hasError ? "text-input--error" : ""}`}
+        inputClassName={`${classNames} ${hasError ? "text-input--error" : ""} !w-full`}
         onChange={handleChange}
         onBlur={handleBlur}
         placeholder={placeholder}
+        feedback={false}
       />
 
       <Typography

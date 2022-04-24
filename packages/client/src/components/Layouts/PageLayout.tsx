@@ -8,7 +8,10 @@ function PageLayout() {
       <TopNav />
       <div className="grid grid-cols-layout">
         <Collections />
-        <Outlet />
+
+        <main className="flex flex-col gap-5 justify-center ">
+          <Outlet />
+        </main>
       </div>
     </div>
   );

@@ -9,12 +9,17 @@ type Auth {
 }
 
 type Collection {
-  _id: String!
+  _id: ObjectId!
   color: String!
   iconUrl: String!
+  isFavorite: Boolean!
   name: String!
   owner: User!
   tasks: [Task!]
+}
+
+input CollectionIDInput {
+  _id: ObjectId!
 }
 
 type CollectionResponse {
@@ -34,20 +39,22 @@ type CollectionsResponse {
 input CreateCollectionInput {
   color: String!
   iconUrl: String!
+  isFavorite: Boolean
   name: String!
-  owner: ObjectId!
 }
 
 input CreateTaskInput {
   collectionId: ObjectId!
   date: String!
   description: String!
+  time: String!
 }
 
 input CreateUserInput {
   email: String!
+  name: String!
   password: String!
-  username: String!
+  surname: String!
 }
 
 type Image {
@@ -79,13 +86,18 @@ input LoginInput {
 }
 
 type Mutation {
+  clear: OnlyMessageResponse!
+  clearUsers: OnlyMessageResponse!
   createCollection(input: CreateCollectionInput!): CollectionResponse!
   createTask(input: CreateTaskInput!): TaskResponse!
-  deleteTask(input: TaskIDInput!): TaskResponse!
+  deleteCollection(input: CollectionIDInput!): OnlyMessageResponse!
+  deleteTask(input: TaskIDInput!): OnlyMessageResponse!
   login(input: LoginInput!): UserAuthResponse!
   register(input: CreateUserInput!): OnlyMessageResponse!
+  updateCollection(input: UpdateCollectionInput!): CollectionResponse!
   updatePassword(input: UpdatePasswordInput!): OnlyMessageResponse!
   updateTask(input: UpdateTaskInput!): TaskResponse!
+  updateUser(input: UpdateUserInput!): UserResponse!
 }
 
 """Mongo object id scalar type"""
@@ -118,10 +130,12 @@ input SearchImageInput {
 
 type Task {
   _id: ObjectId!
+  collectionId: ObjectId!
   completed: Boolean!
   date: String!
   description: String!
   owner: User!
+  time: String!
 }
 
 input TaskIDInput {
@@ -142,6 +156,14 @@ type TasksResponse {
   message: String!
 }
 
+input UpdateCollectionInput {
+  _id: ObjectId!
+  color: String
+  iconUrl: String
+  isFavorite: Boolean
+  name: String
+}
+
 input UpdatePasswordInput {
   _id: ObjectId!
   newPassword: String!
@@ -155,13 +177,27 @@ input UpdateTaskInput {
   description: String
 }
 
+input UpdateUserInput {
+  _id: ObjectId!
+  email: String
+  name: String
+  surname: String
+}
+
 type User {
   _id: ObjectId!
+  avatar: String!
   email: String!
-  username: String!
+  name: String!
+  surname: String!
 }
 
 type UserAuthResponse {
   data: Auth
+  message: String!
+}
+
+type UserResponse {
+  data: User
   message: String!
 }

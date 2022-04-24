@@ -66,18 +66,21 @@ class TaskService {
   }
 
   async deleteTask(input: TaskIDInput, context: IContext) {
-    const task = await TaskModel.findOneAndDelete({
-      _id: input._id,
-      owner: context.res.locals.userId,
-    });
+    const task = await TaskModel.findOne({ _id: input._id, owner: context.res.locals.userId });
 
     if (!task) {
-      throw new ApolloError("Error deleting task");
+      throw new ApolloError("Task not found");
     }
+
+    await CollectionModel.updateOne(
+      { _id: task.collectionId, owner: context.res.locals.userId },
+      { $pull: { tasks: task._id } }
+    );
+
+    await TaskModel.deleteOne({ _id: input._id, owner: context.res.locals.userId });
 
     return {
       message: "Task deleted successfully",
-      data: { task },
     };
   }
 

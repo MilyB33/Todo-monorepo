@@ -4,19 +4,55 @@ import { selectCollection } from "../../store/slices/userSlice";
 import GoBackButton from "../Buttons/GoBackButton";
 import CollectionOverlayButton from "../Buttons/CollectionOverlayButton";
 import Typography from "../Typography";
+import { AiOutlineStar, AiFillStar } from "react-icons/ai";
+import { useMutation } from "@apollo/client";
+import { queries } from "../../clients/ApolloClient";
+import { useAppDispatch } from "../../store/app/hooks";
+import { replaceCollection } from "../../store/slices/userSlice";
 
-const CollectionHeader = () => {
+interface PropTypes {
+  handleOpenDialog: () => void;
+}
+
+const CollectionHeader = ({ handleOpenDialog }: PropTypes) => {
+  const dispatch = useAppDispatch();
   const { collectionId } = useParams();
   const collection = useAppSelector(selectCollection)(collectionId!)!;
+  const [toggleFavourite] = useMutation(queries.mutation.UPDATE_COLLECTION, {
+    variables: {
+      input: {
+        _id: collection._id,
+        isFavorite: !collection.isFavorite,
+      },
+    },
+    onCompleted: (data) => {
+      dispatch(replaceCollection(data.updateCollection.data.collection));
+    },
+  });
+
+  const handleOnClick = async () => {
+    try {
+      await toggleFavourite();
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
-    <header className="flex gap-10 items-center w-2/4">
+    <header className="flex gap-10 items-center">
       <GoBackButton />
 
       <Typography classNames="font-bold" variant="h2">
         {collection.name}
       </Typography>
 
-      <CollectionOverlayButton _id={collection._id} />
+      <div className="flex gap-3 ml-auto">
+        <button className="text-3xl text-yellow" onClick={handleOnClick}>
+          {collection.isFavorite ? <AiFillStar /> : <AiOutlineStar />}
+        </button>
+
+        <CollectionOverlayButton handleOpenDialog={handleOpenDialog} _id={collection._id} />
+      </div>
     </header>
   );
 };

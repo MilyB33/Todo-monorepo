@@ -12,6 +12,7 @@ import RegisterPage from "../Pages/RegisterPage";
 import DashboardPage from "../Pages/DashboardPage";
 import CollectionsPage from "../Pages/CollectionsPage";
 import CollectionPage from "../Pages/CollectionPage";
+import AccountPage from "../Pages/AccountPage";
 
 const Router = () => {
   return (
@@ -30,6 +31,7 @@ const Router = () => {
                 <Route path="/dashboard" element={<DashboardPage />} />
                 <Route path="/collections" element={<CollectionsPage />} />
                 <Route path="/collections/:collectionId" element={<CollectionPage />} />
+                <Route path="/account" element={<AccountPage />} />
               </Route>
             </Route>
           </Route>
