@@ -5,9 +5,12 @@
   "main": "index.js",
   "scripts": {
     "test": "echo Testing server",
-    "build": "./node_modules/typescript/bin/tsc",
+    "postinstall": "tsc",
     "start": "node dist/src/index.js",
     "dev": "ts-node-dev --respawn --transpile-only src/index.ts"
+  },
+  "engines": {
+    "node": "16.13.1"
   },
   "author": "",
   "license": "ISC",
