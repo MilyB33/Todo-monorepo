@@ -4,8 +4,7 @@
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",
-    "tsc": "./node_modules/typescript/bin/tsc",
-    "build": "tsc && vite build",
+    "build": "./node_modules/typescript/bin/tsc && vite build",
     "preview": "vite preview",
     "test": "echo Testing client"
   },
