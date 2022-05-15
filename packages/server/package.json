@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo Testing server",
+    "tsc": "tsc",
     "build": "tsc",
     "start": "node dist/src/index.js",
     "dev": "ts-node-dev --respawn --transpile-only src/index.ts"
