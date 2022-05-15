@@ -179,10 +179,11 @@ module.exports = {
         900: "#212121",
         DEFAULT: "#212121",
       },
+      transparent: {
+        DEFAULT: "transparent",
+      },
     },
-    gradients: {
-      basic: ["45deg", "#f1749e", "#2196F3"],
-    },
+    gradients: {},
     extend: {
       gridTemplateColumns: {
         layout: "minmax(250px,min-content) auto",

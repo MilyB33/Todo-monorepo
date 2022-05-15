@@ -39,10 +39,10 @@ const CollectionHeader = ({ handleOpenDialog }: PropTypes) => {
   };
 
   return (
-    <header className="flex gap-10 items-center">
+    <header className="flex gap-3 items-center">
       <GoBackButton />
 
-      <Typography classNames="font-bold" variant="h2">
+      <Typography classNames="font-bold" variant="h3">
         {collection.name}
       </Typography>
 

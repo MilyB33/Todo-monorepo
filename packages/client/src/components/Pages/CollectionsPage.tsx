@@ -3,7 +3,7 @@ import DashboardHeader from "../Header/DashboardHeader";
 
 const CollectionsPage = () => {
   return (
-    <section className="grid gap-5 mx-[15%]">
+    <section className="flex flex-col gap-5 mx-[5%] md:mx-[15%] h-full">
       <DashboardHeader>Collections</DashboardHeader>
 
       <CollectionsWrapper />

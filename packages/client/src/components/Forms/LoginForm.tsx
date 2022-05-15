@@ -60,7 +60,7 @@ const LoginForm = () => {
           }}
         >
           {(props) => (
-            <form className="grid gap-3 lg:w-2/4">
+            <form className="grid gap-3 xl:w-2/4">
               <Field
                 name="email"
                 label="Email"

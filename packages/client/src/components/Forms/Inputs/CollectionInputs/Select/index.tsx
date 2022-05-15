@@ -47,8 +47,8 @@ const Select = (props: DefaultProps) => {
         name={name}
         value={inputValue}
         aria-describedby={name}
-        className={`!bg-text-pink ${hasError ? "text-input--error" : ""}`}
-        panelClassName="!bg-text-pink"
+        className={`bg-surface-600 ${hasError ? "text-input--error" : ""}`}
+        panelClassName="!bg-blue-300"
         onChange={handleChange}
         onBlur={handleBlur}
         options={values}

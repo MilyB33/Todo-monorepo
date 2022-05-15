@@ -21,10 +21,7 @@ export const useAuth = () => {
 
       handleSuccess(data.login.message);
 
-      setTimeout(() => {
-        // timeout to avoid instant redirect
-        dispatch(login(data.login.data));
-      }, 3000);
+      dispatch(login(data.login.data));
     },
     onError: (error) => {
       console.log(error);

@@ -1,7 +1,7 @@
 import logo from "../../../assets/logoX128.png";
-import BackToHomeButton from "../../Buttons/BackToHomeButton";
 import Typography from "../../Typography";
 import { Link } from "react-router-dom";
+import { AiOutlineHome } from "react-icons/ai";
 
 interface IPropTypes {
   children: React.ReactNode | string;
@@ -19,7 +19,12 @@ interface IPropTypes {
 function AuthWrapper({ children, header, bottom }: IPropTypes) {
   return (
     <section className="bg-gray-200 flex flex-col gap-5 justify-center items-center relative p-5">
-      <BackToHomeButton />
+      <Link
+        to="/"
+        className="bg-text text-lg border-tex text-blue p-2 rounded-full absolute top-5 left-5"
+      >
+        <AiOutlineHome />
+      </Link>
 
       <img src={logo} alt="logo" />
 

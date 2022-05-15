@@ -1,5 +1,12 @@
 import { ApolloError } from "apollo-server-express";
-import { UpdatePasswordInput, UserModel, UpdateUserInput } from "../schema/user.schema";
+import {
+  UpdatePasswordInput,
+  UserModel,
+  UpdateUserInput,
+  UpdateAvatarInput,
+  DeleteUserInput,
+} from "../schema/user.schema";
+
 import bcrypt from "bcrypt";
 
 class UserService {
@@ -39,6 +46,36 @@ class UserService {
     ).lean();
 
     return { data: updatedUser, message: "User updated" };
+  }
+
+  async updateAvatar(input: UpdateAvatarInput) {
+    const user = await UserModel.findById(input._id).lean();
+
+    if (!user) {
+      throw new ApolloError("User not found");
+    }
+
+    const updatedUser = await UserModel.findByIdAndUpdate(
+      input._id,
+      {
+        ...input,
+      },
+      { new: true }
+    ).lean();
+
+    return { data: updatedUser, message: "User updated" };
+  }
+
+  async deleteUser(input: DeleteUserInput) {
+    const user = await UserModel.findById(input._id).lean();
+
+    if (!user) {
+      throw new ApolloError("User not found");
+    }
+
+    await UserModel.findByIdAndDelete(input._id);
+
+    return { message: "User deleted" };
   }
 }
 

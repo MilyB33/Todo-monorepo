@@ -21,7 +21,22 @@ class ImageService {
 
   async uploadImage(config: UploadOptions): Promise<UploadResponse | null> {
     try {
-      const response = await this.#client.upload(config);
+      const response = await this.#client.upload({
+        overwriteFile: true,
+        useUniqueFileName: false,
+        ...config,
+      });
+
+      return response;
+    } catch (e) {
+      console.log(e);
+      return null;
+    }
+  }
+
+  async deleteImage(fileId: string) {
+    try {
+      const response = await this.#client.deleteFile(fileId);
 
       return response;
     } catch (e) {

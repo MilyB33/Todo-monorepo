@@ -1,10 +1,10 @@
 import Typography from "../Typography";
-import ActionButton from "./ActionButton";
+import PrimaryButton from "../Buttons/ButtonPrimary";
 
 const Hero = () => {
   return (
     <header className="m-auto text-center grid gap-8 px-5">
-      <Typography variant="h1">Organize your tasks</Typography>
+      <Typography variant="h2">Organize your tasks</Typography>
 
       <Typography classNames="max-w-lg text-gray-600">
         Lorem, ipsum dolor sit amet consectetur adipisicing elit. Cum dolore eius doloremque aperiam
@@ -13,12 +13,13 @@ const Hero = () => {
       </Typography>
 
       <div className="flex gap-5 justify-center">
-        <ActionButton to="/login" color="bg-basic">
-          Get started
-        </ActionButton>
-        <ActionButton color="bg-surface-800" to="/about">
-          Learn more
-        </ActionButton>
+        <PrimaryButton
+          variant="link"
+          to="/login"
+          text="Get started"
+          style="border-pink-300 border-2"
+        />
+        <PrimaryButton variant="link" to="/about" text="Learn more" style="bg-surface-800" />
       </div>
     </header>
   );

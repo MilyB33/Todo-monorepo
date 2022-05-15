@@ -60,10 +60,19 @@ export class Auth {
 }
 
 @ObjectType()
+export class Avatar {
+  @Field(() => String)
+  avatar: string;
+}
+
+@ObjectType()
 export class UserAuthResponse extends MessageResponse<Auth>(Auth) {}
 
 @ObjectType()
 export class UserResponse extends MessageResponse<User>(User) {}
+
+@ObjectType()
+export class AvatarResponse extends MessageResponse<Avatar>(Avatar) {}
 
 export const UserModel = getModelForClass<typeof User, QueryHelpers>(User);
 
@@ -123,4 +132,19 @@ export class UpdateUserInput {
 
   @Field(() => String, { nullable: true })
   email?: string;
+}
+
+@InputType()
+export class DeleteUserInput {
+  @Field(() => ObjectIdScalar)
+  _id: ObjectId;
+}
+
+@InputType()
+export class UpdateAvatarInput {
+  @Field(() => ObjectIdScalar)
+  _id: ObjectId;
+
+  @Field(() => String)
+  avatar: string;
 }

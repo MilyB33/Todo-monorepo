@@ -3,9 +3,12 @@ import DashboardHeader from "../Header/DashboardHeader";
 
 const AccountPage = () => {
   return (
-    <section className="grid gap-5 w-1/4 mx-auto">
-      <DashboardHeader>Account</DashboardHeader>
-      <PersonalInfo />
+    <section className="flex items-center justify-center w-full h-full">
+      <div className="flex flex-col gap-5">
+        <DashboardHeader>Account</DashboardHeader>
+
+        <PersonalInfo />
+      </div>
     </section>
   );
 };

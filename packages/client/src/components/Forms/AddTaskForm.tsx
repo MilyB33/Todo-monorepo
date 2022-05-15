@@ -3,7 +3,6 @@ import TextInput from "./Inputs/AuthInputs/TextInput";
 import Button from "../Buttons/Button";
 import { useMutation } from "@apollo/client";
 import { queries } from "../../clients/ApolloClient";
-import ToastMessage from "../Generic/ToastMessage";
 import { useAppDispatch } from "../../store/app/hooks";
 import { addTask } from "../../store/slices/userSlice";
 import Calendar from "./Inputs/TaskInputs/Calendar";
@@ -59,14 +58,14 @@ const AddTaskForm = () => {
         >
           {(props) => (
             <form className="flex flex-col font-bold">
-              <div className="flex">
+              <div className="flex gap-2 justify-between sm:justify-start">
                 <Field
                   name="date"
                   label="Date"
                   component={Calendar}
                   setFieldValue={props.setFieldValue}
                   placeholder="Enter date"
-                  isIcon
+                  classNames="task-input"
                 />
 
                 <Field
@@ -75,8 +74,8 @@ const AddTaskForm = () => {
                   component={Calendar}
                   setFieldValue={props.setFieldValue}
                   placeholder="Enter time"
+                  classNames="task-input"
                   isTime
-                  classNames="ml-auto"
                 />
               </div>
 
@@ -85,7 +84,7 @@ const AddTaskForm = () => {
                 label="Description"
                 component={TextInput}
                 placeholder="Enter description"
-                classNames="mt-5 !w-full"
+                classNames="task-input"
               />
 
               <Button

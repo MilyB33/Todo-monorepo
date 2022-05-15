@@ -5,8 +5,7 @@ import { useAppSelector } from "../../store/app/hooks";
 import { useParams } from "react-router-dom";
 import { selectCollection } from "../../store/slices/userSlice";
 import TasksList from "../Task/TasksList";
-import { ScrollPanel } from "primereact/scrollpanel";
-import { Dialog } from "primereact/dialog";
+import CollectionDialog from "../Dialogs/CollectionDialog";
 import EditCollectionForm from "../Forms/EditCollectionForm";
 
 interface PropTypes {
@@ -22,20 +21,18 @@ const Collection = ({ showDialog, onHide }: PropTypes) => {
   const tasksCompleted = collection?.tasks.filter((task) => task.completed);
 
   return (
-    <section className="max-h-[80vh] ">
-      <ScrollPanel style={{ width: "100%", height: "80vh" }}>
-        <Accordion expandIcon="" collapseIcon="" className="!w-full">
-          <AccordionTab headerClassName="!w-full" className="header" header={<AccordionHeader />}>
-            <AddTaskForm />
-          </AccordionTab>
-        </Accordion>
+    <section>
+      <Accordion expandIcon="" collapseIcon="" className="!w-full">
+        <AccordionTab headerClassName="!w-full" className="header" header={<AccordionHeader />}>
+          <AddTaskForm />
+        </AccordionTab>
+      </Accordion>
 
-        <TasksList header="Tasks" tasks={tasks} />
+      <TasksList header="Tasks" tasks={tasks} />
 
-        <TasksList header="Completed" tasks={tasksCompleted} />
-      </ScrollPanel>
+      <TasksList header="Completed" tasks={tasksCompleted} />
 
-      <Dialog
+      <CollectionDialog
         header="Edit Collection"
         visible={showDialog}
         style={{ width: "30vw" }}
@@ -43,7 +40,7 @@ const Collection = ({ showDialog, onHide }: PropTypes) => {
         onHide={onHide}
       >
         <EditCollectionForm />
-      </Dialog>
+      </CollectionDialog>
     </section>
   );
 };

@@ -53,6 +53,9 @@ import { ObjectIdScalar } from "./types";
   server.applyMiddleware({
     app,
     path: "/api/graphql",
+    bodyParserConfig: {
+      limit: "50mb",
+    },
   });
 
   const port = config.get("port");

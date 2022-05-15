@@ -178,6 +178,17 @@ const UPDATE_ACCOUNT = gql`
   }
 `;
 
+const UPDATE_AVATAR = gql`
+  mutation updateAvatar($input: UpdateAvatarInput!) {
+    updateAvatar(input: $input) {
+      message
+      data {
+        avatar
+      }
+    }
+  }
+`;
+
 // Queries:
 const ME = gql`
   ${USER_FIELDS}
@@ -240,5 +251,6 @@ export const queries = {
     UPDATE_COLLECTION,
     UPDATE_PASSWORD,
     UPDATE_ACCOUNT,
+    UPDATE_AVATAR,
   },
 };

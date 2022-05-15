@@ -50,9 +50,22 @@
     @apply !text-text !border-text;
   }
 
-  .header .p-accordion-header-link,
-  .header .p-accordion-content {
+  .p-accordion .p-accordion-header .p-accordion-header-link,
+  .p-accordion .p-accordion-header:not(.p-disabled).p-highlight .p-accordion-header-link,
+  .header :is(.p-accordion-header-link, .p-accordion-header, .p-accordion-content, .p-accordion) {
     @apply !p-0;
-    background: transparent;
+    background-color: transparent;
+  }
+
+  .button {
+    @apply grid place-content-center p-2 rounded-sm relative opacity-80 hover:opacity-100 transition-all duration-300;
+  }
+
+  .task-input {
+    background-color: transparent;
+  }
+
+  .input-error {
+    @apply !text-defaults-error !border-defaults-error !shadow-lg;
   }
 }

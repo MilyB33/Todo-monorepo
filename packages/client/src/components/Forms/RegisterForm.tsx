@@ -75,8 +75,8 @@ const RegisterForm = () => {
           }}
         >
           {(props) => (
-            <form className="grid gap-3 lg:w-2/4">
-              <span className="flex justify-between gap-2">
+            <form className="grid gap-3 lg:w-3/4">
+              <span className="flex gap-2">
                 <Field
                   name="name"
                   label="Name"

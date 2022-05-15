@@ -42,9 +42,12 @@ export const authSlice = createSlice({
       state.user.email = action.payload.email;
       state.user.avatar = action.payload.avatar;
     },
+    updateAvatar: (state, action: PayloadAction<string>) => {
+      state.user.avatar = action.payload;
+    },
   },
 });
 
-export const { login, logout, updateAccount } = authSlice.actions;
+export const { login, logout, updateAccount, updateAvatar } = authSlice.actions;
 
 export default authSlice.reducer;

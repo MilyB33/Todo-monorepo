@@ -8,6 +8,15 @@ type Auth {
   user: User
 }
 
+type Avatar {
+  avatar: String!
+}
+
+type AvatarResponse {
+  data: Avatar
+  message: String!
+}
+
 type Collection {
   _id: ObjectId!
   color: String!
@@ -57,6 +66,10 @@ input CreateUserInput {
   surname: String!
 }
 
+input DeleteUserInput {
+  _id: ObjectId!
+}
+
 type Image {
   createdAt: String!
   customCoordinates: String
@@ -92,8 +105,10 @@ type Mutation {
   createTask(input: CreateTaskInput!): TaskResponse!
   deleteCollection(input: CollectionIDInput!): OnlyMessageResponse!
   deleteTask(input: TaskIDInput!): OnlyMessageResponse!
+  deleteUser(input: DeleteUserInput!): OnlyMessageResponse!
   login(input: LoginInput!): UserAuthResponse!
   register(input: CreateUserInput!): OnlyMessageResponse!
+  updateAvatar(input: UpdateAvatarInput!): AvatarResponse!
   updateCollection(input: UpdateCollectionInput!): CollectionResponse!
   updatePassword(input: UpdatePasswordInput!): OnlyMessageResponse!
   updateTask(input: UpdateTaskInput!): TaskResponse!
@@ -154,6 +169,11 @@ type Tasks {
 type TasksResponse {
   data: Tasks
   message: String!
+}
+
+input UpdateAvatarInput {
+  _id: ObjectId!
+  avatar: String!
 }
 
 input UpdateCollectionInput {

@@ -39,13 +39,14 @@ const Calendar = (props: CalendarPropTypes) => {
       <CalendarInput
         id={name}
         name={name}
-        inputClassName="!text-text-dark !text-center"
-        className="!bg-pink "
+        inputClassName={`${classNames} ${
+          hasError ? "border-defaults-error" : "border-text"
+        } rounded border-[#3f4b5b]`}
+        className="!text-text"
         value={date}
         onChange={handleChange}
         showIcon={isIcon}
         onBlur={handleBlur}
-        panelClassName="!bg-pink-300"
         placeholder={placeholder}
         timeOnly={isTime}
         readOnlyInput
