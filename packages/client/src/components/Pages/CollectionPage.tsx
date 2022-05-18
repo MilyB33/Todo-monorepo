@@ -13,7 +13,7 @@ const CollectionPage = () => {
     <ScrollPanel
       style={{
         width: "100%",
-        height: "80vh",
+        height: "85vh",
       }}
     >
       <section className="grid gap-3 md:mx-[10%]">

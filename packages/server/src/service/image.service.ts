@@ -1,5 +1,6 @@
 import { ListFileOptions, UploadOptions, UploadResponse } from "imagekit/dist/libs/interfaces";
 import ImageKitClient from "../clients/ImageKitClient";
+import { IDeleteImageConfig, RequireAtLeastOne } from "../types";
 
 class ImageService {
   #client: typeof ImageKitClient = ImageKitClient;
@@ -34,9 +35,26 @@ class ImageService {
     }
   }
 
-  async deleteImage(fileId: string) {
+  async deleteImage(config: RequireAtLeastOne<IDeleteImageConfig, "fileId" | "userId">) {
     try {
-      const response = await this.#client.deleteFile(fileId);
+      if (config.fileId) {
+        const response = await this.#client.deleteFile(config.fileId);
+        return response;
+      }
+
+      if (config.userId) {
+        const response = await this.#client.deleteFolder(`profile/${config.userId}`);
+        return response;
+      }
+    } catch (e) {
+      console.log(e);
+      return null;
+    }
+  }
+
+  async deleteFolder(folderPath: string) {
+    try {
+      const response = await this.#client.deleteFolder(folderPath);
 
       return response;
     } catch (e) {

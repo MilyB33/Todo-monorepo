@@ -1,13 +1,13 @@
 import { ApolloError } from "apollo-server-express";
 import {
   CreateCollectionInput,
-  CollectionModel,
   CollectionIDInput,
   UpdateCollectionInput,
 } from "../schema/collection.schema";
-import { UserModel, User } from "../schema/user.schema";
+import { User } from "../schema/user.schema";
 import { IContext, Ref } from "../types";
-import { Task, TaskModel } from "../schema/task.schema";
+import { Task } from "../schema/task.schema";
+import { CollectionModel, TaskModel, UserModel } from "../schema";
 
 class CollectionService {
   async createCollection(input: CreateCollectionInput, context: IContext) {
@@ -87,7 +87,9 @@ class CollectionService {
   }
 
   async getTasks(ids: Ref<Task>[]) {
-    return await TaskModel.find({ _id: { $in: ids } }).lean();
+    const tasks = await TaskModel.find({ _id: { $in: ids } }).lean();
+    tasks.sort((a, b) => (new Date(a.date) < new Date(b.date) ? 1 : -1));
+    return tasks;
   }
 }
 

@@ -56,7 +56,6 @@ input CreateTaskInput {
   collectionId: ObjectId!
   date: String!
   description: String!
-  time: String!
 }
 
 input CreateUserInput {
@@ -150,7 +149,6 @@ type Task {
   date: String!
   description: String!
   owner: User!
-  time: String!
 }
 
 input TaskIDInput {

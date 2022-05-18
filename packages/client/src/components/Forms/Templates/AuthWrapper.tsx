@@ -2,6 +2,7 @@ import logo from "../../../assets/logoX128.png";
 import Typography from "../../Typography";
 import { Link } from "react-router-dom";
 import { AiOutlineHome } from "react-icons/ai";
+import LinkButton from "../../Buttons/LinkButton";
 
 interface IPropTypes {
   children: React.ReactNode | string;
@@ -19,12 +20,12 @@ interface IPropTypes {
 function AuthWrapper({ children, header, bottom }: IPropTypes) {
   return (
     <section className="bg-gray-200 flex flex-col gap-5 justify-center items-center relative p-5">
-      <Link
+      <LinkButton
         to="/"
         className="bg-text text-lg border-tex text-blue p-2 rounded-full absolute top-5 left-5"
       >
         <AiOutlineHome />
-      </Link>
+      </LinkButton>
 
       <img src={logo} alt="logo" />
 

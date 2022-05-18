@@ -4,7 +4,7 @@ import Typography from "../Typography";
 import TextInput from "./Inputs/AuthInputs/TextInput";
 import Password from "./Inputs/AuthInputs/Password";
 import Checkbox from "./Inputs/AuthInputs/Checkbox";
-import SubmitButton from "../Buttons/SubmitButton";
+import Button from "../Buttons/Button";
 import validationSchema from "../../utils/validation.schema";
 import { isEveryTouched } from "../../utils/isEveryTouched";
 import { Link } from "react-router-dom";
@@ -91,11 +91,13 @@ const LoginForm = () => {
                 </Link>
               </div>
 
-              <SubmitButton
+              <Button
                 loading={loading}
                 disabled={!props.isValid || !isEveryTouched(props.touched)}
                 label="Log in"
-                onSubmit={props.handleSubmit}
+                type="submit"
+                onClick={props.handleSubmit}
+                className="btn-submit"
               />
             </form>
           )}

@@ -1,9 +1,10 @@
 import { ApolloError } from "apollo-server-express";
 import { IContext, Ref } from "../types";
-import { TaskModel, UpdateTaskInput } from "../schema/task.schema";
+import { UpdateTaskInput } from "../schema/task.schema";
 import { CreateTaskInput, TaskIDInput } from "../schema/task.schema";
-import { UserModel, User } from "../schema/user.schema";
-import { CollectionModel } from "../schema/collection.schema";
+import { User } from "../schema/user.schema";
+
+import { TaskModel, UserModel, CollectionModel } from "../schema";
 
 class TaskService {
   async createTask(input: CreateTaskInput, context: IContext) {

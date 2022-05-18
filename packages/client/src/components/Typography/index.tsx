@@ -12,70 +12,70 @@ const Typography = ({ variant, children, classNames, ...props }: IPropTypes) => 
   switch (variant) {
     case "h1": {
       return (
-        <h1 {...props} className={`${classNames} text-3xl sm:text-4xl`}>
+        <h1 {...props} className={`text-3xl sm:text-4xl ${classNames}`}>
           {children}
         </h1>
       );
     }
     case "h2": {
       return (
-        <h2 {...props} className={`${classNames} text-2xl sm:text-3xl`}>
+        <h2 {...props} className={`text-2xl sm:text-3xl ${classNames}`}>
           {children}
         </h2>
       );
     }
     case "h3": {
       return (
-        <h3 {...props} className={`${classNames} text-2xl`}>
+        <h3 {...props} className={`text-2xl ${classNames}`}>
           {children}
         </h3>
       );
     }
     case "h4": {
       return (
-        <h4 {...props} className={`${classNames} text-xl`}>
+        <h4 {...props} className={`text-xl ${classNames}`}>
           {children}
         </h4>
       );
     }
     case "h5": {
       return (
-        <h5 {...props} className={`${classNames} text-base`}>
+        <h5 {...props} className={`text-base ${classNames}`}>
           {children}
         </h5>
       );
     }
     case "h6": {
       return (
-        <h6 {...props} className={`${classNames} text-sm`}>
+        <h6 {...props} className={`text-sm ${classNames}`}>
           {children}
         </h6>
       );
     }
     case "small": {
       return (
-        <p {...props} className={`${classNames} text-xs`}>
+        <p {...props} className={`text-xs ${classNames}`}>
           {children}
         </p>
       );
     }
     case "a": {
       return (
-        <a {...props} className={`${classNames} text-base`}>
+        <a {...props} className={`text-base ${classNames}`}>
           {children}
         </a>
       );
     }
     case "button": {
       return (
-        <p {...props} className={`${classNames} sm:text-base text-sm `}>
+        <p {...props} className={`sm:text-base text-sm ${classNames}`}>
           {children}
         </p>
       );
     }
     default: {
       return (
-        <p {...props} className={`${classNames} text-base`}>
+        <p {...props} className={`text-base ${classNames}`}>
           {children}
         </p>
       );

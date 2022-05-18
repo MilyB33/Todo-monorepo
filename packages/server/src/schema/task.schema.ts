@@ -1,9 +1,10 @@
-import { getModelForClass, prop } from "@typegoose/typegoose";
+import { prop } from "@typegoose/typegoose";
 import { Field, InputType, ObjectType } from "type-graphql";
 import { ObjectIdScalar, Ref } from "../types";
 import { ObjectId } from "mongodb";
 import { MessageResponse } from "./default.schema";
 import { User } from "./user.schema";
+import { Schema } from "mongoose";
 
 @ObjectType()
 export class Task {
@@ -18,16 +19,12 @@ export class Task {
   @prop({ required: true })
   date: string;
 
-  @Field(() => String)
-  @prop({ required: true })
-  time: string;
-
   @Field(() => Boolean)
   @prop({ required: true })
   completed: boolean;
 
   @Field(() => User)
-  @prop({ ref: User, required: true })
+  @prop({ ref: () => User, required: true, type: () => Schema.Types.ObjectId })
   owner: Ref<User>;
 
   @Field(() => ObjectIdScalar)
@@ -53,7 +50,7 @@ export class TaskResponse extends MessageResponse<OneTask>(OneTask) {}
 @ObjectType()
 export class TasksResponse extends MessageResponse<Tasks>(Tasks) {}
 
-export const TaskModel = getModelForClass<typeof Task>(Task);
+// export const TaskModel = getModelForClass<typeof Task>(Task);
 
 @InputType()
 export class CreateTaskInput {
@@ -62,9 +59,6 @@ export class CreateTaskInput {
 
   @Field(() => String)
   date: string;
-
-  @Field(() => String)
-  time: string;
 
   @Field(() => ObjectIdScalar)
   collectionId: ObjectId;

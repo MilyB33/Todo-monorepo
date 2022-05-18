@@ -1,6 +1,6 @@
 import { Formik, Field } from "formik";
 import Password from "./Inputs/AuthInputs/Password";
-import SubmitButton from "../Buttons/SubmitButton";
+import Button from "../Buttons/Button";
 import validationSchema from "../../utils/validation.schema";
 import { isEveryTouched } from "../../utils/isEveryTouched";
 import WithConfig from "../../hoc/WithConfig";
@@ -86,11 +86,13 @@ const UpdatePasswordForm = () => {
               placeholder="Confirm your new password"
             />
 
-            <SubmitButton
+            <Button
               disabled={!isEveryTouched(props.touched) || !props.isValid}
               label="Change"
-              onSubmit={props.handleSubmit}
+              type="submit"
+              onClick={props.handleSubmit}
               loading={loading}
+              className="btn-submit"
             />
           </form>
         )}

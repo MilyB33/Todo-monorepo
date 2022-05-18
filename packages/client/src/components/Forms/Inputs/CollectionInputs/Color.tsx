@@ -36,7 +36,7 @@ const Color = (props: DefaultProps) => {
         name={name}
         value={inputValue}
         aria-describedby={name}
-        className={`!rounded ${hasError ? "text-input--error" : ""}`}
+        className={`${hasError ? "text-input--error" : ""}`}
         onChange={handleChange}
         onBlur={handleBlur}
         format="hex"

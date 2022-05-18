@@ -1,4 +1,4 @@
-import { getModelForClass, prop, ReturnModelType, queryMethod, pre } from "@typegoose/typegoose";
+import { prop, ReturnModelType, queryMethod, pre } from "@typegoose/typegoose";
 import bcrypt from "bcrypt";
 import { AsQueryMethod } from "@typegoose/typegoose/lib/types";
 import { IsEmail, MaxLength, MinLength } from "class-validator";
@@ -11,11 +11,13 @@ function findByEmail(this: ReturnModelType<typeof User, QueryHelpers>, email: Us
   return this.findOne({ email });
 }
 
-interface QueryHelpers {
+export interface QueryHelpers {
   findByEmail: AsQueryMethod<typeof findByEmail>;
 }
 
-@pre<User>("save", async function () {
+@pre<User>("save", async function (next) {
+  console.log("save");
+
   if (!this.isModified("password")) return;
 
   const salt = await bcrypt.genSalt(10);
@@ -23,6 +25,8 @@ interface QueryHelpers {
   const hash = await bcrypt.hashSync(this.password, salt);
 
   this.password = hash;
+
+  next();
 })
 @ObjectType()
 @queryMethod(findByEmail)
@@ -74,7 +78,7 @@ export class UserResponse extends MessageResponse<User>(User) {}
 @ObjectType()
 export class AvatarResponse extends MessageResponse<Avatar>(Avatar) {}
 
-export const UserModel = getModelForClass<typeof User, QueryHelpers>(User);
+// export const UserModel = getModelForClass<typeof User, QueryHelpers>(User);
 
 @InputType()
 export class CreateUserInput {

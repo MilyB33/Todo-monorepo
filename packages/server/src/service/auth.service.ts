@@ -1,8 +1,9 @@
 import { ApolloError } from "apollo-server-express";
 import bcrypt from "bcrypt";
 import { signJwt } from "../utils/jwt";
-import { CreateUserInput, LoginInput, UserModel } from "../schema/user.schema";
+import { CreateUserInput, LoginInput } from "../schema/user.schema";
 import { IContext } from "../types";
+import { UserModel } from "../schema";
 
 class AuthService {
   async register(input: CreateUserInput) {

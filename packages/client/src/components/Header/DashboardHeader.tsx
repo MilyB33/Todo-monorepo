@@ -1,5 +1,6 @@
 import Typography from "../Typography";
-import GoBackButton from "../Buttons/GoBackButton";
+import LinkButton from "../Buttons/LinkButton";
+import { AiOutlineArrowLeft } from "react-icons/ai";
 
 interface PropTypes {
   children: React.ReactNode | string;
@@ -9,7 +10,9 @@ interface PropTypes {
 const DashboardHeader = ({ children, style }: PropTypes) => {
   return (
     <header className={`${style || ""} flex gap-5 items-center`}>
-      <GoBackButton />
+      <LinkButton to={"/dashboard"}>
+        <AiOutlineArrowLeft className="text-xl" />
+      </LinkButton>
 
       <Typography classNames="font-bold" variant="h2">
         {children}

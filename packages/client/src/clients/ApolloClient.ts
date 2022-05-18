@@ -39,7 +39,6 @@ const TASK_FIELDS = gql`
     _id
     description
     date
-    time
     completed
     collectionId
   }
@@ -189,6 +188,14 @@ const UPDATE_AVATAR = gql`
   }
 `;
 
+const DELETE_USER = gql`
+  mutation deleteUser($input: DeleteUserInput!) {
+    deleteUser(input: $input) {
+      message
+    }
+  }
+`;
+
 // Queries:
 const ME = gql`
   ${USER_FIELDS}
@@ -244,6 +251,7 @@ export const queries = {
     REGISTER,
     LOGIN,
     CREATE_COLLECTION,
+    DELETE_USER,
     CREATE_TASK,
     UPDATE_TASK,
     DELETE_TASK,

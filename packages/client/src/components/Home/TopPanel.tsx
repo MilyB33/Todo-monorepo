@@ -1,6 +1,6 @@
 import logo from "../../assets/logoX64.png";
 import Typography from "../Typography";
-import PrimaryButton from "../Buttons/ButtonPrimary";
+import LinkButton from "../Buttons/LinkButton";
 
 const TopPanel = () => {
   return (
@@ -10,13 +10,12 @@ const TopPanel = () => {
       <Typography variant="h2">Name</Typography>
 
       <nav className="flex md:gap-5 ml-auto ">
-        <PrimaryButton variant="link" to="/login" text="Log in" style="py-1 px-4 rounded-md" />
+        <LinkButton to="/login" label="Log in" className="py-1 px-4 rounded-md" />
 
-        <PrimaryButton
-          variant="link"
+        <LinkButton
           to="/register"
-          text="Sign up"
-          style="py-1 px-4 border-2 border-pink-300 rounded-md hover:bg-pink-300"
+          label="Sign up"
+          className="py-1 px-4 border-2 border-pink-300 rounded-md hover:bg-pink-300"
         />
       </nav>
     </section>

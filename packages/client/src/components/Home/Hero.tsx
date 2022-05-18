@@ -1,5 +1,5 @@
 import Typography from "../Typography";
-import PrimaryButton from "../Buttons/ButtonPrimary";
+import LinkButton from "../Buttons/LinkButton";
 
 const Hero = () => {
   return (
@@ -13,13 +13,8 @@ const Hero = () => {
       </Typography>
 
       <div className="flex gap-5 justify-center">
-        <PrimaryButton
-          variant="link"
-          to="/login"
-          text="Get started"
-          style="border-pink-300 border-2"
-        />
-        <PrimaryButton variant="link" to="/about" text="Learn more" style="bg-surface-800" />
+        <LinkButton to="/register" label="Get started" className="border-pink-300 border-2" />
+        <LinkButton to="/about" label="Learn more" className="bg-surface-800" />
       </div>
     </header>
   );

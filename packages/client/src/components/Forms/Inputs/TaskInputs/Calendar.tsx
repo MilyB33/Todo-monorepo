@@ -39,9 +39,9 @@ const Calendar = (props: CalendarPropTypes) => {
       <CalendarInput
         id={name}
         name={name}
-        inputClassName={`${classNames} ${
-          hasError ? "border-defaults-error" : "border-text"
-        } rounded border-[#3f4b5b]`}
+        inputClassName={` ${classNames} ${
+          hasError ? "border-defaults-error" : "border-[#3f4b5b]"
+        } rounded`}
         className="!text-text"
         value={date}
         onChange={handleChange}

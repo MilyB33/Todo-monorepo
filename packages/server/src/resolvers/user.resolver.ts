@@ -39,7 +39,10 @@ export default class UserResolver {
     const avatarUrl = await this.imageService.uploadImage({
       file: input.avatar,
       fileName: `${input._id}`,
-      folder: "profile",
+      folder: `profile/${input._id}`,
+      customMetadata: {
+        type: "profile",
+      },
     });
 
     if (!avatarUrl) {
@@ -55,6 +58,7 @@ export default class UserResolver {
   @Authorized()
   @Mutation(() => OnlyMessageResponse)
   async deleteUser(@Arg("input") input: DeleteUserInput) {
+    // this.imageService.deleteFolder(`profile/${input._id}`);
     return this.userService.deleteUser(input);
   }
 

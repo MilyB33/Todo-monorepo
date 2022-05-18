@@ -9,6 +9,7 @@ import Calendar from "./Inputs/TaskInputs/Calendar";
 import validationSchema from "../../utils/validation.schema";
 import { useParams } from "react-router-dom";
 import { useToastMessage } from "../../hooks/useToastMessage";
+import moment from "moment";
 
 const initialValues = {
   description: "",
@@ -40,12 +41,17 @@ const AddTaskForm = () => {
             try {
               const { description, date, time } = values;
 
+              const dateTime = moment(date).set({
+                hour: time.getHours(),
+                minute: time.getMinutes(),
+                second: time.getSeconds(),
+              });
+
               createTask({
                 variables: {
                   input: {
                     description,
-                    date,
-                    time,
+                    date: dateTime,
                     collectionId,
                   },
                 },
@@ -91,8 +97,8 @@ const AddTaskForm = () => {
                 label="Add"
                 onClick={props.handleSubmit}
                 type="submit"
-                styles="bg-pink-300 mx-auto px-8 py-2 rounded-full transition-colors hover:bg-pink-400 mt-5"
-                disabled={loading}
+                className="bg-pink-300 mx-auto px-8 py-2 rounded-full transition-colors hover:bg-pink-400 mt-5"
+                loading={loading}
               />
             </form>
           )}

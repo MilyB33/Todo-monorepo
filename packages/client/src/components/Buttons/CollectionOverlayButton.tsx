@@ -7,6 +7,7 @@ import { useMutation } from "@apollo/client";
 import { queries } from "../../clients/ApolloClient";
 import { useNavigate } from "react-router-dom";
 import { useToastMessage } from "../../hooks/useToastMessage";
+import { confirmDialog, ConfirmDialog } from "primereact/confirmdialog";
 
 interface PropTypes {
   _id: string;
@@ -41,6 +42,19 @@ const UserOverlay = ({ _id, handleOpenDialog }: PropTypes) => {
     });
   };
 
+  const confirm = () => {
+    confirmDialog({
+      message: "Are you sure you want to delete this collection?",
+      header: "Delete Collection",
+      acceptLabel: "Delete",
+      rejectLabel: "Cancel",
+      accept: handleDelete,
+      reject: () => {
+        console.log("Rejected");
+      },
+    });
+  };
+
   const items = [
     {
       label: "Edit",
@@ -50,7 +64,7 @@ const UserOverlay = ({ _id, handleOpenDialog }: PropTypes) => {
     {
       label: "Delete",
       icon: "pi pi-fw pi-trash",
-      command: handleDelete,
+      command: confirm,
     },
   ];
 
@@ -71,6 +85,7 @@ const UserOverlay = ({ _id, handleOpenDialog }: PropTypes) => {
         aria-haspopup
         className="text-text hover:!text-text !bg-transparent p-3 rounded-full  !transition-colors border-none"
       />
+      <ConfirmDialog />
     </div>
   );
 };

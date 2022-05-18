@@ -35,9 +35,9 @@ const Collection = ({ showDialog, onHide }: PropTypes) => {
       <CollectionDialog
         header="Edit Collection"
         visible={showDialog}
-        style={{ width: "30vw" }}
         modal={true}
         onHide={onHide}
+        keepInViewport
       >
         <EditCollectionForm />
       </CollectionDialog>

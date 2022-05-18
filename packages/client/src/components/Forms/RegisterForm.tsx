@@ -1,7 +1,7 @@
 import { Formik, Field } from "formik";
 import TextInput from "./Inputs/AuthInputs/TextInput";
 import Password from "./Inputs/AuthInputs/Password";
-import SubmitButton from "../Buttons/SubmitButton";
+import Button from "../Buttons/Button";
 import validationSchema from "../../utils/validation.schema";
 import { isEveryTouched } from "../../utils/isEveryTouched";
 import AuthWrapper from "./Templates/AuthWrapper";
@@ -75,7 +75,7 @@ const RegisterForm = () => {
           }}
         >
           {(props) => (
-            <form className="grid gap-3 lg:w-3/4">
+            <form className="grid gap-3 xl:w-2/4">
               <span className="flex gap-2">
                 <Field
                   name="name"
@@ -119,11 +119,13 @@ const RegisterForm = () => {
                 placeholder="Confirm your password"
               />
 
-              <SubmitButton
+              <Button
                 disabled={!isEveryTouched(props.touched) || !props.isValid}
                 label="Sign up"
-                onSubmit={props.handleSubmit}
+                type="submit"
+                onClick={props.handleSubmit}
                 loading={loading}
+                className="btn-submit"
               />
             </form>
           )}

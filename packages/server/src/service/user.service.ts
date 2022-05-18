@@ -1,11 +1,11 @@
 import { ApolloError } from "apollo-server-express";
 import {
   UpdatePasswordInput,
-  UserModel,
   UpdateUserInput,
   UpdateAvatarInput,
   DeleteUserInput,
 } from "../schema/user.schema";
+import { UserModel, TaskModel, CollectionModel } from "../schema";
 
 import bcrypt from "bcrypt";
 
@@ -67,13 +67,15 @@ class UserService {
   }
 
   async deleteUser(input: DeleteUserInput) {
-    const user = await UserModel.findById(input._id).lean();
+    const user = await UserModel.findById(input._id);
 
     if (!user) {
       throw new ApolloError("User not found");
     }
 
-    await UserModel.findByIdAndDelete(input._id);
+    await UserModel.deleteOne(input._id);
+    await TaskModel.deleteMany({ owner: input._id }); // cannot use @pre becaues of circular dependency
+    await CollectionModel.deleteMany({ owner: input._id });
 
     return { message: "User deleted" };
   }

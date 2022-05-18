@@ -116,11 +116,12 @@ const CollectionFormTemplate = ({
               </div>
 
               <Button
+                loading={loading}
                 label={buttonText}
                 onClick={props.handleSubmit}
                 type="submit"
-                styles="bg-pink-300 mx-auto px-8 py-2 rounded transition-colors hover:bg-pink-400 mt-5"
-                disabled={loading}
+                defaultStyles={false}
+                className="bg-pink-300 mx-auto px-8 py-2 rounded transition-colors hover:bg-pink-400 mt-5"
               />
             </form>
           )}

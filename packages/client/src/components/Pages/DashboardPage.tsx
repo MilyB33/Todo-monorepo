@@ -1,7 +1,7 @@
 import Typography from "../Typography";
 
 import { useAuth } from "../../hooks/useAuth";
-import PrimaryButton from "../Buttons/ButtonPrimary";
+import LinkButton from "../Buttons/LinkButton";
 
 const DashboardPage = () => {
   const { user } = useAuth();
@@ -20,19 +20,16 @@ const DashboardPage = () => {
         </Typography>
       </div>
 
-      {/* this will be moved as separate component as soon as statistic page will be created */}
       <div className="flex justify-center gap-5">
-        <PrimaryButton
-          variant="link"
+        <LinkButton
           to="/dashboard"
-          text="Daily Overview"
-          style="p-2 bg-pink-300 rounded-full"
+          label="Daily Overview"
+          className="p-2 bg-pink-300 rounded-full"
         />
-        <PrimaryButton
-          variant="link"
-          to="/dashboard/statistics"
-          text="Statistics"
-          style="p-2 border-pink-300 border-2 rounded-full"
+        <LinkButton
+          to="/account"
+          label="Account"
+          className="p-2 border-pink-300 border-2 rounded-full"
         />
       </div>
     </header>

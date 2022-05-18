@@ -61,8 +61,14 @@ const TaskSchema = Yup.object().shape({
     .min(3, minLog(3, "Description"))
     .max(50, maxLog(50, "Description"))
     .required("Required"),
-  date: Yup.date().required("Required").typeError("Invalid date"),
-  time: Yup.date().required("Required").typeError("Invalid time"),
+  date: Yup.date()
+    .required("Required")
+    .typeError("Invalid date")
+    .min(new Date(), "Date must be in the future"),
+  time: Yup.date()
+    .required("Required")
+    .typeError("Invalid time")
+    .min(new Date(), "Time must be in the future"),
 });
 
 const DisplayNameSchema = Yup.object().shape({

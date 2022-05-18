@@ -3,11 +3,14 @@ import { useAuth } from "../../hooks/useAuth";
 import Typography from "../Typography";
 import Avatar from "./Avatar";
 import EditButton from "../Buttons/EditButton";
-import PrimaryButton from "../Buttons/ButtonPrimary";
+import Button from "../Buttons/Button";
 import UpdatePasswordForm from "../Forms/UpdatePasswordForm";
 import UpdateNameForm from "../Forms/UpdateNameForm";
 import UpdateEmailForm from "../Forms/UpdateEmailForm";
-import { ScrollPanel } from "primereact/scrollpanel";
+import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
+import { useMutation } from "@apollo/client";
+import { useToastMessage } from "../../hooks/useToastMessage";
+import { queries } from "../../clients/ApolloClient";
 
 type FormName = "nameForm" | "emailForm" | "passwordForm";
 
@@ -19,6 +22,18 @@ const initialState = {
 
 const PersonalInfo = () => {
   const [visibility, setVisibility] = useState(initialState);
+  const { user, handleLogout } = useAuth();
+  const { handleSuccess, handleError } = useToastMessage();
+  const [deleteUser, { loading }] = useMutation(queries.mutation.DELETE_USER, {
+    onCompleted: (data) => {
+      handleSuccess(data.deleteUser.message);
+      handleLogout();
+    },
+    onError: (error) => {
+      console.error(error.message);
+      handleError(error.message);
+    },
+  });
 
   const handleChangeVisibility = useCallback((formName: FormName) => {
     setVisibility((prevState) => {
@@ -33,7 +48,27 @@ const PersonalInfo = () => {
   const handleToggleEmailForm = useCallback(() => handleChangeVisibility("emailForm"), []);
   const handleTogglePasswordForm = useCallback(() => handleChangeVisibility("passwordForm"), []);
 
-  const { user } = useAuth();
+  const confirm = useCallback(() => {
+    confirmDialog({
+      header: "Are you sure?",
+      message: "Are you sure you want to delete your account?",
+      acceptLabel: "Yes",
+      rejectLabel: "No",
+      accept: () => {
+        deleteUser({
+          variables: {
+            input: {
+              _id: user._id,
+            },
+          },
+        });
+      },
+      reject: () => {
+        console.log("No");
+      },
+    });
+  }, []);
+
   return (
     <>
       <section className="flex flex-col gap-4 bg-surface-800 rounded w-[300px] p-4 relative">
@@ -77,10 +112,13 @@ const PersonalInfo = () => {
             />
           </div>
 
-          <PrimaryButton
-            text="Delete Account"
-            style="bg-defaults-error p-1 absolute right-2 top-2"
+          <Button
+            onClick={confirm}
+            label="Delete Account"
+            className="bg-defaults-error p-1 absolute right-2 top-2"
+            loading={loading}
           />
+          <ConfirmDialog />
 
           {visibility.passwordForm && <UpdatePasswordForm />}
         </div>

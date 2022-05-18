@@ -6,7 +6,7 @@ import { queries } from "../../clients/ApolloClient";
 import { ProgressSpinner } from "primereact/progressspinner";
 import { ICollection } from "../../types";
 import { setCollections, selectFavoriteCollections } from "../../store/slices/userSlice";
-import MoreButton from "../Buttons/MoreButton";
+import LinkButton from "../Buttons/LinkButton";
 
 const Collections = () => {
   const dispatch = useAppDispatch();
@@ -35,7 +35,12 @@ const Collections = () => {
             ))
           )}
 
-          <MoreButton />
+          <LinkButton
+            to="/collections"
+            label="More"
+            defaultStyles={false}
+            className="mt-5 mx-auto bg-blue px-4 py-2 rounded transition-colors hover:bg-blue-600 shadow-lg"
+          />
         </section>
       </nav>
     </aside>

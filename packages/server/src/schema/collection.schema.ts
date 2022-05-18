@@ -1,4 +1,4 @@
-import { getModelForClass, prop } from "@typegoose/typegoose";
+import { prop } from "@typegoose/typegoose";
 import { Field, InputType, ObjectType } from "type-graphql";
 import { ObjectIdScalar, Ref } from "../types";
 import { User } from "./user.schema";
@@ -24,11 +24,11 @@ export class Collection {
   iconUrl: string;
 
   @Field(() => User)
-  @prop({ ref: User, required: true })
+  @prop({ ref: () => User, required: true })
   owner: Ref<User>;
 
   @Field(() => [Task], { nullable: true })
-  @prop({ ref: Task, required: false, default: [] })
+  @prop({ ref: () => Task, required: false, default: [] })
   tasks: Ref<Task>[];
 
   @Field(() => Boolean)
@@ -54,7 +54,7 @@ export class CollectionResponse extends MessageResponse<OneCollection>(OneCollec
 @ObjectType()
 export class CollectionsResponse extends MessageResponse<Collections>(Collections) {}
 
-export const CollectionModel = getModelForClass<typeof Collection>(Collection);
+// export const CollectionModel = getModelForClass<typeof Collection>(Collection);
 
 @InputType()
 export class CreateCollectionInput {

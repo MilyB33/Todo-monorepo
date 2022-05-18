@@ -1,8 +1,6 @@
 // Temporary service for clearing database
 
-import { CollectionModel } from "../schema/collection.schema";
-import { UserModel } from "../schema/user.schema";
-import { TaskModel } from "../schema/task.schema";
+import { CollectionModel, UserModel, TaskModel } from "../schema";
 
 class ClearService {
   async clear() {

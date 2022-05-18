@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { useAppSelector } from "../../store/app/hooks";
 import CollectionCard from "./CollectionCard";
-import AddCollectionButton from "../Buttons/AddCollectionButton";
+import Button from "../Buttons/Button";
 import CollectionDialog from "../Dialogs/CollectionDialog";
 import AddCollectionForm from "../Forms/AddCollectionForm";
+import { AiOutlinePlus } from "react-icons/ai";
 
 const CollectionsWrapper = () => {
   const [showDialog, setShowDialog] = useState(false);
@@ -18,7 +19,13 @@ const CollectionsWrapper = () => {
         {collections.map((collection) => (
           <CollectionCard key={collection._id} collection={collection} />
         ))}
-        <AddCollectionButton onClick={handleOpenDialog} />
+
+        <Button
+          onClick={handleOpenDialog}
+          className="h-min py-5 flex justify-center border-text-secondary border-2 border-dashed transition-all hover:scale-105"
+        >
+          <AiOutlinePlus />
+        </Button>
       </section>
 
       <CollectionDialog

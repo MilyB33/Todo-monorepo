@@ -13,6 +13,7 @@ import DashboardPage from "../Pages/DashboardPage";
 import CollectionsPage from "../Pages/CollectionsPage";
 import CollectionPage from "../Pages/CollectionPage";
 import AccountPage from "../Pages/AccountPage";
+import NotFound from "../Pages/NotFound";
 
 const Router = () => {
   return (
@@ -34,6 +35,7 @@ const Router = () => {
                 <Route path="/account" element={<AccountPage />} />
               </Route>
             </Route>
+            <Route path="*" element={<NotFound />} />
           </Route>
         </Route>
       </Routes>

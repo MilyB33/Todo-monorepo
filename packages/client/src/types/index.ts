@@ -72,7 +72,6 @@ export interface ITask {
   _id: string;
   description: string;
   date: string;
-  time: string;
   completed: boolean;
   collectionId: string;
 }

@@ -1,6 +1,6 @@
 import { Formik, Field } from "formik";
 import TextInput from "./Inputs/AuthInputs/TextInput";
-import SubmitButton from "../Buttons/SubmitButton";
+import Button from "../Buttons/Button";
 import validationSchema from "../../utils/validation.schema";
 import { isEveryTouched } from "../../utils/isEveryTouched";
 import WithConfig from "../../hoc/WithConfig";
@@ -72,11 +72,13 @@ const UpdateEmailForm = () => {
               placeholder="Enter new Email"
             />
 
-            <SubmitButton
+            <Button
               disabled={!isEveryTouched(props.touched) || !props.isValid}
               label="Update"
-              onSubmit={props.handleSubmit}
+              type="submit"
+              onClick={props.handleSubmit}
               loading={loading}
+              className="btn-submit"
             />
           </form>
         )}
