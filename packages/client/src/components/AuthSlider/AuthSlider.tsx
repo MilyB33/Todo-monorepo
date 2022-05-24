@@ -12,28 +12,28 @@ import sm_timetable from "../../assets/timetableX64.png";
 const AuthSlider = () => {
   const items = [
     {
-      id: 0,
+      id: 1,
       text: "Organize your tasks.",
       icon: binder,
       iconSm: sm_binder,
       alt: "binder",
     },
     {
-      id: 1,
+      id: 2,
       text: "Save your time.",
       icon: idea,
       iconSm: sm_idea,
       alt: "idea",
     },
     {
-      id: 2,
+      id: 3,
       text: "Write your notes.",
       icon: note,
       iconSm: sm_note,
       alt: "note",
     },
     {
-      id: 3,
+      id: 4,
       text: "Don't forget what you need to do.",
       icon: timetable,
       iconSm: sm_timetable,
@@ -46,6 +46,8 @@ const AuthSlider = () => {
       <Carousel
         value={items}
         autoplayInterval={3000}
+        circular={true}
+        numScroll={1}
         itemTemplate={ItemTemplate}
         className="w-full text-center"
       />

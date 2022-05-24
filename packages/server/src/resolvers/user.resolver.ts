@@ -10,6 +10,7 @@ import {
   AvatarResponse,
   UpdateAvatarInput,
   DeleteUserInput,
+  RememberPasswordInput,
 } from "../schema/user.schema";
 import { OnlyMessageResponse } from "../schema/default.schema";
 import { ApolloError } from "apollo-server-express";
@@ -25,6 +26,11 @@ export default class UserResolver {
   @Mutation(() => OnlyMessageResponse)
   updatePassword(@Arg("input") input: UpdatePasswordInput) {
     return this.userService.updatePassword(input);
+  }
+
+  @Mutation(() => OnlyMessageResponse)
+  async rememberPassword(@Arg("input") input: RememberPasswordInput) {
+    return this.userService.rememberPassword(input);
   }
 
   @Authorized()

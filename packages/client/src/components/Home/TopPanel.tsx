@@ -7,7 +7,7 @@ const TopPanel = () => {
     <section className="flex items-center md:gap-3.5 gap-2 px-5 md:px-40 py-3">
       <img src={logo} alt="logo" />
 
-      <Typography variant="h2">Name</Typography>
+      <Typography variant="h3">Name</Typography>
 
       <nav className="flex md:gap-5 ml-auto ">
         <LinkButton to="/login" label="Log in" className="py-1 px-4 rounded-md" />

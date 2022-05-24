@@ -1,13 +1,13 @@
 import { useParams } from "react-router-dom";
 import { useAppSelector } from "../../store/app/hooks";
-import { selectCollection } from "../../store/slices/userSlice";
+import { selectCollection } from "../../store/slices/collectionsSlice";
 import CollectionOverlayButton from "../Buttons/CollectionOverlayButton";
 import Typography from "../Typography";
 import { AiOutlineStar, AiFillStar } from "react-icons/ai";
 import { useMutation } from "@apollo/client";
 import { queries } from "../../clients/ApolloClient";
 import { useAppDispatch } from "../../store/app/hooks";
-import { replaceCollection } from "../../store/slices/userSlice";
+import { replaceCollection } from "../../store/slices/collectionsSlice";
 import LinkButton from "../Buttons/LinkButton";
 import { AiOutlineArrowLeft } from "react-icons/ai";
 

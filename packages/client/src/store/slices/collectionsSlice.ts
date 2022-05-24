@@ -10,8 +10,8 @@ const initialState: IState = {
   collections: [],
 };
 
-export const userSlice = createSlice({
-  name: "user",
+export const collectionsSlice = createSlice({
+  name: "collections",
   initialState: initialState,
   reducers: {
     setCollections: (state, action: PayloadAction<ICollection[]>) => {
@@ -60,13 +60,13 @@ export const userSlice = createSlice({
 });
 
 export const selectCollection = (state: RootState) => (id: string) => {
-  return state.user.collections.find((collection) => collection._id === id);
+  return state.collections.collections.find((collection) => collection._id === id);
 };
 
 export const selectFavoriteCollections =
   (state: RootState) =>
   (limit: number = 5) => {
-    return state.user.collections.reduce((acc, collection, _, arr) => {
+    return state.collections.collections.reduce((acc, collection, _, arr) => {
       if (collection.isFavorite) {
         acc.push(collection);
       }
@@ -81,6 +81,14 @@ export const selectFavoriteCollections =
     }, [] as ICollection[]);
   };
 
+export const selectDashboardCollections = (state: RootState) => {
+  return state.collections.collections
+    .filter((collection) => collection.tasks.length !== 0)
+    .sort((a, b) => {
+      return a.tasks[0].date > b.tasks[0].date ? 1 : -1;
+    });
+};
+
 export const {
   setCollections,
   addCollection,
@@ -90,6 +98,6 @@ export const {
   addTask,
   removeTask,
   replaceTask,
-} = userSlice.actions;
+} = collectionsSlice.actions;
 
-export default userSlice.reducer;
+export default collectionsSlice.reducer;

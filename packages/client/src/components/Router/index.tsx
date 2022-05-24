@@ -9,10 +9,10 @@ import App from "../../App";
 import HomePage from "../Pages/HomePage";
 import LoginPage from "../Pages/LoginPage";
 import RegisterPage from "../Pages/RegisterPage";
+import ForgotPasswordPage from "../Pages/ForgotPasswordPage";
 import DashboardPage from "../Pages/DashboardPage";
 import CollectionsPage from "../Pages/CollectionsPage";
 import CollectionPage from "../Pages/CollectionPage";
-import AccountPage from "../Pages/AccountPage";
 import NotFound from "../Pages/NotFound";
 
 const Router = () => {
@@ -25,6 +25,7 @@ const Router = () => {
               <Route index element={<HomePage />} />
               <Route path="/login" element={<LoginPage />} />
               <Route path="/register" element={<RegisterPage />} />
+              <Route path="/forgot-password" element={<ForgotPasswordPage />} />
             </Route>
 
             <Route element={<Protected />}>
@@ -32,7 +33,6 @@ const Router = () => {
                 <Route path="/dashboard" element={<DashboardPage />} />
                 <Route path="/collections" element={<CollectionsPage />} />
                 <Route path="/collections/:collectionId" element={<CollectionPage />} />
-                <Route path="/account" element={<AccountPage />} />
               </Route>
             </Route>
             <Route path="*" element={<NotFound />} />

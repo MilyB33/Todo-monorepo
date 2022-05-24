@@ -4,7 +4,7 @@ import { useToastMessage } from "./useToastMessage";
 import { useLocalStorage } from "./useLocalStorage";
 import { queries } from "../clients/ApolloClient";
 import { login, logout } from "../store/slices/authSlice";
-import { clearCollections } from "../store/slices/userSlice";
+import { clearCollections } from "../store/slices/collectionsSlice";
 
 export const useAuth = () => {
   const { handleSuccess, handleError } = useToastMessage();

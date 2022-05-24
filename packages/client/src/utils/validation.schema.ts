@@ -87,6 +87,21 @@ const EmailSchema = Yup.object().shape({
     .required("Required"),
 });
 
+const ForgotPasswordSchema = Yup.object().shape({
+  email: Yup.string()
+    .email("Invalid email")
+    .min(3, minLog(3, "Email"))
+    .max(50, maxLog(50, "Email"))
+    .required("Required"),
+  password: Yup.string()
+    .min(8, minLog(8, "Password"))
+    .max(50, maxLog(50, "Password"))
+    .required("Required"),
+  confirmPassword: Yup.string()
+    .oneOf([Yup.ref("password"), null], "Passwords must match")
+    .required("Required"),
+});
+
 export default {
   LoginSchema,
   RegisterSchema,
@@ -94,4 +109,5 @@ export default {
   UpdatePassowrdSchema,
   DisplayNameSchema,
   EmailSchema,
+  ForgotPasswordSchema,
 };

@@ -47,7 +47,7 @@ export class User {
   email: string;
 
   @Field(() => String)
-  @prop({ required: true, default: "https://ik.imagekit.io/eucxsqj51hzu/default/profile" })
+  @prop({ required: true, default: "https://ik.imagekit.io/eucxsqj51hzu/profile/default" })
   avatar: string;
 
   @prop({ required: true })
@@ -151,4 +151,13 @@ export class UpdateAvatarInput {
 
   @Field(() => String)
   avatar: string;
+}
+
+@InputType()
+export class RememberPasswordInput {
+  @Field(() => String)
+  email: string;
+
+  @Field(() => String)
+  password: string;
 }

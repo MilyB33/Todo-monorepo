@@ -1,7 +1,7 @@
 import CollectionFormTemplate from "./Templates/CollectionFormTemplate";
 import { useAppDispatch } from "../../store/app/hooks";
 import { queries } from "../../clients/ApolloClient";
-import { replaceCollection } from "../../store/slices/userSlice";
+import { replaceCollection } from "../../store/slices/collectionsSlice";
 
 const EditCollectionForm = () => {
   const dispatch = useAppDispatch();

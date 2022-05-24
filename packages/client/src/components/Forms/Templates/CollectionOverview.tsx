@@ -10,7 +10,7 @@ interface IPropTypes {
 const CollectionOverview = ({ icon, label, color }: IPropTypes) => {
   return (
     <div className="grid gap-5">
-      <Typography variant="h5">Overview: </Typography>
+      <Typography>Overview: </Typography>
 
       <div className="py-4 hover:bg-gray-600 transition-colors cursor-pointer">
         <Link to="" className="flex gap-3 justify-center items-center">

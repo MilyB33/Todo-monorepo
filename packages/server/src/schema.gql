@@ -107,6 +107,7 @@ type Mutation {
   deleteUser(input: DeleteUserInput!): OnlyMessageResponse!
   login(input: LoginInput!): UserAuthResponse!
   register(input: CreateUserInput!): OnlyMessageResponse!
+  rememberPassword(input: RememberPasswordInput!): OnlyMessageResponse!
   updateAvatar(input: UpdateAvatarInput!): AvatarResponse!
   updateCollection(input: UpdateCollectionInput!): CollectionResponse!
   updatePassword(input: UpdatePasswordInput!): OnlyMessageResponse!
@@ -135,6 +136,11 @@ type Query {
   getTask(input: TaskIDInput!): TaskResponse!
   getTasks: TasksResponse!
   me: UserAuthResponse!
+}
+
+input RememberPasswordInput {
+  email: String!
+  password: String!
 }
 
 input SearchImageInput {

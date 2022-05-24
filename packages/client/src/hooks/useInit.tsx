@@ -17,7 +17,6 @@ export const useInit = () => {
   const { defaultIcons } = useAppSelector((state) => state.app);
 
   useEffect(() => {
-    console.log("tak");
     if (data && !loading && !defaultIcons.length) {
       dispatch(setDefaultIcons(data.getImages.data.images));
     }

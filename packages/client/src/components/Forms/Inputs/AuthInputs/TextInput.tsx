@@ -48,7 +48,6 @@ const TextInput = (props: TextInputPropTypes) => {
           onBlur={handleBlur}
           placeholder={placeholder}
         />
-        {/* {icon && <i className={`pi ${icon} !text-blue`} />} */}
       </span>
 
       <Typography

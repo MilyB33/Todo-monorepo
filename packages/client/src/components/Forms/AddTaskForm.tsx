@@ -4,7 +4,7 @@ import Button from "../Buttons/Button";
 import { useMutation } from "@apollo/client";
 import { queries } from "../../clients/ApolloClient";
 import { useAppDispatch } from "../../store/app/hooks";
-import { addTask } from "../../store/slices/userSlice";
+import { addTask } from "../../store/slices/collectionsSlice";
 import Calendar from "./Inputs/TaskInputs/Calendar";
 import validationSchema from "../../utils/validation.schema";
 import { useParams } from "react-router-dom";

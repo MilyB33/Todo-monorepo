@@ -29,7 +29,7 @@ function AuthWrapper({ children, header, bottom }: IPropTypes) {
 
       <img src={logo} alt="logo" />
 
-      <Typography classNames="text-pink-300 uppercase text-center font-bold" variant="h1">
+      <Typography classNames="text-pink-300 uppercase text-center font-bold" variant="h2">
         {header.pink} <span className="text-blue">{header.blue}</span>
       </Typography>
 

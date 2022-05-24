@@ -24,7 +24,7 @@ const Avatar = ({ url }: PropTypes) => {
         <img src={url} alt="avatar" />
       </div>
 
-      <OverlayPanel showCloseIcon={true} ref={op} id="overlay_panel">
+      <OverlayPanel className="!p-0" showCloseIcon={true} ref={op} id="overlay_panel">
         <FileInput />
       </OverlayPanel>
     </div>

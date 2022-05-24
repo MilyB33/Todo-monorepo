@@ -1,0 +1,1 @@
+server: node packages/server/dist/index.js

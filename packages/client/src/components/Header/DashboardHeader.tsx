@@ -14,7 +14,7 @@ const DashboardHeader = ({ children, style }: PropTypes) => {
         <AiOutlineArrowLeft className="text-xl" />
       </LinkButton>
 
-      <Typography classNames="font-bold" variant="h2">
+      <Typography classNames="font-bold" variant="h3">
         {children}
       </Typography>
     </header>

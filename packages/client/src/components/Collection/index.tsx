@@ -3,7 +3,7 @@ import AccordionHeader from "./AccordionHeader";
 import AddTaskForm from "../Forms/AddTaskForm";
 import { useAppSelector } from "../../store/app/hooks";
 import { useParams } from "react-router-dom";
-import { selectCollection } from "../../store/slices/userSlice";
+import { selectCollection } from "../../store/slices/collectionsSlice";
 import TasksList from "../Task/TasksList";
 import CollectionDialog from "../Dialogs/CollectionDialog";
 import EditCollectionForm from "../Forms/EditCollectionForm";

@@ -1,13 +1,10 @@
 import { useAuth } from "../../hooks/useAuth";
 import { Formik, Field } from "formik";
-import Typography from "../Typography";
 import TextInput from "./Inputs/AuthInputs/TextInput";
 import Password from "./Inputs/AuthInputs/Password";
-import Checkbox from "./Inputs/AuthInputs/Checkbox";
 import Button from "../Buttons/Button";
 import validationSchema from "../../utils/validation.schema";
 import { isEveryTouched } from "../../utils/isEveryTouched";
-import { Link } from "react-router-dom";
 import AuthWrapper from "./Templates/AuthWrapper";
 import WithConfig from "../../hoc/WithConfig";
 import { trimWhitespaces } from "../../utils/trimWhitespaces";
@@ -24,10 +21,10 @@ const PasswordWithConfig = WithConfig(Password, config);
 const initialValues = {
   email: "",
   password: "",
-  remember: false,
+  confirmPassword: "",
 };
 
-const LoginForm = () => {
+const ForgotPasswordForm = () => {
   const {
     query: { loading },
     handleLogin,
@@ -37,8 +34,8 @@ const LoginForm = () => {
     <>
       <AuthWrapper
         header={{
-          pink: "Log",
-          blue: "in",
+          pink: "New",
+          blue: "Password",
         }}
         bottom={{
           text: "Don't have an account?",
@@ -48,7 +45,7 @@ const LoginForm = () => {
       >
         <Formik
           initialValues={initialValues}
-          validationSchema={validationSchema.LoginSchema}
+          validationSchema={validationSchema.ForgotPasswordSchema}
           onSubmit={(values) => {
             try {
               const trimmedValues = trimWhitespaces(values);
@@ -75,26 +72,21 @@ const LoginForm = () => {
                 label="Password"
                 component={PasswordWithConfig}
                 setFieldValue={props.setFieldValue}
-                placeholder="Enter your password"
+                placeholder="Enter your new password"
               />
 
-              <div className="flex items-center gap-5 mt-5">
-                <Field
-                  name="remember"
-                  label="Remember me"
-                  component={Checkbox}
-                  setFieldValue={props.setFieldValue}
-                />
-
-                <Link to="/forgot-password" className="text-blue ml-auto hover:underline">
-                  <Typography>Forgot Password?</Typography>
-                </Link>
-              </div>
+              <Field
+                name="confirmPassword"
+                label="Confirm Password"
+                component={PasswordWithConfig}
+                setFieldValue={props.setFieldValue}
+                placeholder="Confirm password"
+              />
 
               <Button
                 loading={loading}
                 disabled={!props.isValid || !isEveryTouched(props.touched)}
-                label="Log in"
+                label="Update"
                 type="submit"
                 onClick={props.handleSubmit}
                 className="btn-submit"
@@ -107,4 +99,4 @@ const LoginForm = () => {
   );
 };
 
-export default LoginForm;
+export default ForgotPasswordForm;

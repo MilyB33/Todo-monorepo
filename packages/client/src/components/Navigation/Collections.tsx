@@ -5,7 +5,7 @@ import { useAppDispatch, useAppSelector } from "../../store/app/hooks";
 import { queries } from "../../clients/ApolloClient";
 import { ProgressSpinner } from "primereact/progressspinner";
 import { ICollection } from "../../types";
-import { setCollections, selectFavoriteCollections } from "../../store/slices/userSlice";
+import { setCollections, selectFavoriteCollections } from "../../store/slices/collectionsSlice";
 import LinkButton from "../Buttons/LinkButton";
 
 const Collections = () => {

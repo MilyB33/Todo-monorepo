@@ -10,7 +10,7 @@ interface IPropTypes
   type?: "button" | "submit" | "reset";
   disabled?: boolean;
   loading?: boolean;
-  onClick?(): void; // for now because it causes error
+  onClick?(): void;
 }
 
 const Button = (props: IPropTypes) => {

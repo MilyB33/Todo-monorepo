@@ -5,7 +5,7 @@ import Typography from "../Typography";
 import { useMutation } from "@apollo/client";
 import { queries } from "../../clients/ApolloClient";
 import { useAppDispatch } from "../../store/app/hooks";
-import { replaceTask, removeTask } from "../../store/slices/userSlice";
+import { replaceTask, removeTask } from "../../store/slices/collectionsSlice";
 import { BlockUI } from "primereact/blockui";
 import { RiDeleteBin2Fill } from "react-icons/ri";
 import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
@@ -99,7 +99,7 @@ const Task = ({ task }: PropTypes) => {
         <div className={`${task.completed && "line-through"} grid gap-1`}>
           <Typography classNames="select-none">{task.description}</Typography>
 
-          <Typography variant="h6">{formatDate(task.date)}</Typography>
+          <Typography variant="small">{formatDate(task.date)}</Typography>
         </div>
 
         <button

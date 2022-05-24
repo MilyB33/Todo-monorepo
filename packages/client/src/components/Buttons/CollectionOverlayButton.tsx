@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import { Menu } from "primereact/menu";
 import { Button } from "primereact/button";
 import { useAppDispatch } from "../../store/app/hooks";
-import { removeCollection } from "../../store/slices/userSlice";
+import { removeCollection } from "../../store/slices/collectionsSlice";
 import { useMutation } from "@apollo/client";
 import { queries } from "../../clients/ApolloClient";
 import { useNavigate } from "react-router-dom";

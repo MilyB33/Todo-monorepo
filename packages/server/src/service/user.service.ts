@@ -4,6 +4,7 @@ import {
   UpdateUserInput,
   UpdateAvatarInput,
   DeleteUserInput,
+  RememberPasswordInput,
 } from "../schema/user.schema";
 import { UserModel, TaskModel, CollectionModel } from "../schema";
 
@@ -26,6 +27,20 @@ class UserService {
     const newPassword = await bcrypt.hash(input.newPassword, 10);
 
     await UserModel.findByIdAndUpdate(input._id, { password: newPassword });
+
+    return { message: "User updated" };
+  }
+
+  async rememberPassword(input: RememberPasswordInput) {
+    const user = await UserModel.findOne({ email: input.email }).lean();
+
+    if (!user) {
+      throw new ApolloError("User not found");
+    }
+
+    const newPassword = await bcrypt.hash(input.password, 10);
+
+    await UserModel.findByIdAndUpdate(user._id, { password: newPassword });
 
     return { message: "User updated", data: {} };
   }

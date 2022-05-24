@@ -8,7 +8,7 @@ import { AiOutlinePlus } from "react-icons/ai";
 
 const CollectionsWrapper = () => {
   const [showDialog, setShowDialog] = useState(false);
-  const { collections } = useAppSelector((state) => state.user);
+  const { collections } = useAppSelector((state) => state.collections);
 
   const handleOpenDialog = () => setShowDialog(true);
   const handleCloseDialog = () => setShowDialog(false);

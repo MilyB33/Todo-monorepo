@@ -22,7 +22,7 @@ const FileInput = () => {
       handleError(error.message);
     },
   });
-  const sharedClasses = "text-text border-none hover:!text-text";
+  const sharedClasses = "text-text border-none hover:!text-text text-xs sm:text-base";
 
   const chooseOptions = {
     label: "Choose",
@@ -70,6 +70,7 @@ const FileInput = () => {
         customUpload
         uploadHandler={customBase64Uploader}
         accept="image/*"
+        className="p-0"
       />
     </label>
   );
