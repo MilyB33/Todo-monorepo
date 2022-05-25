@@ -1,4 +1,4 @@
-process.env["NODE_CONFIG_DIR"] = __dirname + "/../../config"; // this is needed in build but crashes in dev
+// process.env["NODE_CONFIG_DIR"] = __dirname + "/../../config"; // this is needed in build but crashes in dev
 import "reflect-metadata";
 import dotenv from "dotenv";
 dotenv.config();
