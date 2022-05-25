@@ -1,6 +1,8 @@
+process.env["NODE_CONFIG_DIR"] = __dirname + "/../../config"; // this is needed in build but crashes in dev
+import "reflect-metadata";
 import dotenv from "dotenv";
 dotenv.config();
-import "reflect-metadata";
+import config from "config";
 import express from "express";
 import { buildSchema } from "type-graphql";
 import { ApolloServer } from "apollo-server-express";
@@ -12,7 +14,6 @@ import cookieParser from "cookie-parser";
 import path from "path";
 import { connectToMongo } from "./utils/mongo";
 import { resolvers } from "./resolvers";
-import config from "config";
 import { IContext } from "./types";
 import authChecker from "./middleware/authChecker";
 import { TypegooseMiddleware } from "./middleware/typegoose";
